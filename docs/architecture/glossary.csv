@@ -1,0 +1,12 @@
+term,definition,context,source,aliases,status
+Monorepo,"A single repository containing multiple projects, packages, and services.",Architecture,ADR-0001,,accepted
+ADR,"Architecture Decision Record – a document capturing a significant architectural decision.",Documentation,arc42,,accepted
+Feature-first,"Code organization pattern where top-level directories represent product features rather than technical layers.",Flutter,ADR-0002,,accepted
+Flavor,"A build variant (dev, staging, prod) configured via dart-define.",Flutter,packages/app_core,,accepted
+Design System,"Shared UI components, theme, and spacing constants used across the app.",Flutter,packages/design_system,,accepted
+Copilot Setup Steps,"A GitHub Actions workflow that pre-loads SDK and dependencies for GitHub Copilot agents.",CI,.github/workflows/copilot-setup-steps.yml,,accepted
+arc42,"A template for architecture documentation with 12 standardized sections.",Documentation,https://arc42.org,,accepted
+Conventional Commits,"A commit message convention that enables automated versioning and changelog generation.",Versioning,https://conventionalcommits.org,,accepted
+SemVer,"Semantic Versioning (major.minor.patch) – versioning scheme used for this project.",Versioning,https://semver.org,,accepted
+Normative,"Authoritative source for decisions. Only docs/, AGENTS.md, and agent config files are normative.",Agents,AGENTS.md,,accepted
+Draft,"Non-normative, exploratory content. Never used for implementation unless explicitly requested.",Agents,drafts/README.md,,accepted

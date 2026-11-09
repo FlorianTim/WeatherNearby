@@ -1,0 +1,72 @@
+name: Docs Workflow Check
+run-name: "Check workflow documentation"
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "docs/ideas/**"
+      - "docs/product/**"
+      - "docs/delivery/**"
+      - "docs/architecture/adr/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check-docs:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check idea inbox exists
+        run: test -f docs/ideas/simple/ideas.md
+
+      - name: Check processed-index is valid YAML
+        run: |
+          python3 -c "
+          import yaml, sys
+          try:
+              with open('docs/ideas/simple/processed-index.yml') as f:
+                  yaml.safe_load(f)
+              print('processed-index.yml: valid YAML')
+          except Exception as e:
+              print(f'processed-index.yml: INVALID - {e}')
+              sys.exit(1)
+          "
+
+      - name: Check spec templates exist
+        run: |
+          for f in \
+            docs/product/specs/README.md \
+            docs/product/specs/_template/feature.md \
+            docs/product/specs/_template/requirements.md \
+            docs/product/specs/_template/acceptance-criteria.md; do
+            if [ ! -f "$f" ]; then
+              echo "MISSING: $f"
+              exit 1
+            fi
+          done
+          echo "Spec templates present."
+
+      - name: Check delivery templates exist
+        run: |
+          for f in \
+            docs/delivery/implementation-plans/README.md \
+            docs/delivery/implementation-plans/_template.md \
+            docs/delivery/stories/README.md \
+            docs/delivery/stories/_template.md; do
+            if [ ! -f "$f" ]; then
+              echo "MISSING: $f"
+              exit 1
+            fi
+          done
+          echo "Delivery templates present."

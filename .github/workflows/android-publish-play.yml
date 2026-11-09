@@ -1,0 +1,90 @@
+name: Android Publish (Google Play)
+run-name: "Play ${{ inputs.track }}: ${{ inputs.ref || github.ref_name }}"
+
+# Builds (via the reusable release workflow) and uploads the AAB to Google
+# Play. Uses GitHub Environments as approval gates:
+#   google-play-internal    — internal testing track
+#   google-play-production  — production track (supports staged rollout)
+#
+# Required secrets (per environment, see
+# docs/operations/android-release-secrets.md):
+#   ANDROID_KEYSTORE_BASE64 / _PASSWORD, ANDROID_KEY_ALIAS / _PASSWORD
+#   PLAY_SERVICE_ACCOUNT_JSON
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Ref to build (e.g. release/1.3/1.3.0). Empty = current branch."
+        type: string
+        required: false
+        default: ""
+      track:
+        description: "Google Play track"
+        type: choice
+        options: [internal, production]
+        default: internal
+      rollout_fraction:
+        description: "Staged rollout fraction for production (0.0-1.0; 1.0 = full)"
+        type: string
+        required: false
+        default: "1.0"
+
+permissions:
+  contents: read
+
+jobs:
+  release-build:
+    uses: ./.github/workflows/_android-release-build.yml
+    with:
+      ref: ${{ inputs.ref }}
+    secrets: inherit
+
+  publish:
+    name: Upload to Google Play (${{ inputs.track }})
+    needs: release-build
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    environment: ${{ inputs.track == 'production' && 'google-play-production' || 'google-play-internal' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Download release artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: android-release-${{ needs.release-build.outputs.version_name }}
+          path: release-artifacts
+
+      - name: Derive package name from project.env
+        id: pkg
+        shell: bash
+        run: |
+          source scripts/lib/read_env.sh
+          read_project_env project.env
+          echo "package_name=$ORG.$PROJECT_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Determine rollout status
+        id: rollout
+        shell: bash
+        run: |
+          track="${{ inputs.track }}"
+          fraction="${{ inputs.rollout_fraction }}"
+          if [ "$track" = "production" ] && [ "$fraction" != "1.0" ]; then
+            echo "status=inProgress" >> "$GITHUB_OUTPUT"
+            echo "fraction=$fraction" >> "$GITHUB_OUTPUT"
+          else
+            echo "status=completed" >> "$GITHUB_OUTPUT"
+            echo "fraction=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Upload to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: ${{ steps.pkg.outputs.package_name }}
+          releaseFiles: release-artifacts/*.aab
+          track: ${{ inputs.track }}
+          status: ${{ steps.rollout.outputs.status }}
+          userFraction: ${{ steps.rollout.outputs.fraction }}

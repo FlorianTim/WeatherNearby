@@ -1,0 +1,61 @@
+artifact: lumbrecode-icon
+description: >-
+  LumbreCode company app icon (lightbulb mark with code brackets). Editable
+  masters for the icon set that ships as the template default; a concrete app
+  replaces the derived app icon, not these company masters.
+current_version: "1.0"
+brand:
+  background: "#070A10"
+  accent: "#FF9F1C"
+files:
+  - version: "1.0"
+    path: source/branding/lumbrecode-icon-master-v1.0.svg
+    date: 2026-07-30
+    status: current
+    notes: >-
+      Master with glow effect, opaque background. Vector source for the
+      1024px PNG used as image_path in flutter_launcher_icons.
+  - version: "1.0"
+    path: source/branding/lumbrecode-icon-master-v1.0.png
+    date: 2026-07-30
+    status: current
+    notes: 1024x1024, opaque. Rasterized master; copied to apps/mobile_app/assets/images/app_icon.png.
+  - version: "1.0"
+    path: source/branding/lumbrecode-mark-flat-v1.0.svg
+    date: 2026-07-30
+    status: current
+    notes: Transparent flat mark without glow. Source of the adaptive icon foreground.
+  - version: "1.0"
+    path: source/branding/lumbrecode-mark-flat-v1.0.png
+    date: 2026-07-30
+    status: current
+    notes: 1024x1024 RGBA. Light artwork — needs a dark background to be legible.
+  - version: "1.0"
+    path: source/branding/lumbrecode-mark-monochrome-v1.0.svg
+    date: 2026-07-30
+    status: current
+    notes: Single-color silhouette. Source of the Android 13+ themed-icon layer.
+  - version: "1.0"
+    path: source/branding/lumbrecode-mark-monochrome-v1.0.png
+    date: 2026-07-30
+    status: current
+    notes: 1024x1024 RGBA.
+  - version: "1.0"
+    path: source/branding/lumbrecode-play-store-v1.0.png
+    date: 2026-07-30
+    status: current
+    notes: 512x512, opaque. Google Play store listing icon.
+  - version: "1.0"
+    path: source/branding/lumbrecode-icon-preview-v1.0.png
+    date: 2026-07-30
+    status: current
+    notes: Contact sheet — all variants plus a 16..128px legibility check.
+
+# Where the derived (generated) assets live in the app. These are outputs, not
+# sources: regenerate with `cd apps/mobile_app && dart run flutter_launcher_icons`.
+derived:
+  - apps/mobile_app/assets/images/app_icon.png
+  - apps/mobile_app/assets/branding/
+  - apps/mobile_app/web/favicon.*
+  - apps/mobile_app/web/apple-touch-icon.png
+  - apps/mobile_app/web/icons/Icon-*.png

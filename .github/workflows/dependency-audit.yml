@@ -1,0 +1,60 @@
+name: Dependency Audit
+run-name: "Dependency Audit"
+
+# Known vulnerabilities appear in packages that were already resolved, so a
+# PR-only check would never see them. The schedule is what catches an advisory
+# published after the last merge; the PR trigger only guards changes to the
+# dependency set itself.
+on:
+  schedule:
+    # Mondays, 05:17 UTC - off the hour to avoid the GitHub-wide cron spike.
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "**/pubspec.yaml"
+      - "pubspec.lock"
+      - "tools/audit_deps.dart"
+      - ".github/workflows/dependency-audit.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  audit:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          # Exact on purpose. A floating 3.x cannot be governed: there is
+          # no commit to build, so the SDK changes underneath the repository
+          # with no pull request and no gate. Flutter 3.47.2 shipped a new
+          # analyzer diagnostic as a patch release and turned CI red here on
+          # 2026-09-03, a week after 3.47.1 was green. Renovate raises this
+          # pin as a normal, reviewable pull request.
+          flutter-version: 3.47.1
+          # Note the input names differ from the previous action:
+          # here `cache` is the SDK and `pub-cache` the dependencies.
+          cache: true
+          pub-cache: true
+
+      - name: Audit resolved dependencies against OSV.dev
+        id: audit
+        run: dart tools/audit_deps.dart
+
+      - name: Explain a failure
+        if: failure() && steps.audit.outcome == 'failure'
+        run: |
+          echo "::error::A dependency has a known vulnerability. Run 'melos run audit:fix' locally, or bump the constraint listed above and commit the new pubspec.lock."

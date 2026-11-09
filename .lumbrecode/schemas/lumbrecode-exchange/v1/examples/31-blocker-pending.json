@@ -1,0 +1,28 @@
+{
+  "specversion": "1.0",
+  "id": "0002c0de-0000-4a5e-9f8d-1b2c3d4e5f60-1",
+  "source": "https://lumbrecode.de/apps/was-there-something",
+  "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+  "time": "2026-10-01T18:05:00Z",
+  "datacontenttype": "application/jscalendar+json;type=event",
+  "dataschema": "https://lumbrecode.de/schemas/jscalendar-event/v1/jscalendar-event-v1.schema.json",
+  "subject": "7c1e0000-0000-4000-8000-000000000002",
+  "sourceappid": "de.lumbre.code.was_there_something",
+  "sourceversion": "1.6.0",
+  "data": {
+    "@type": "Event",
+    "uid": "7c1e0000-0000-4000-8000-000000000002",
+    "prodId": "-//LumbreCode//WasThereSomething 1.6//EN",
+    "created": "2026-10-01T18:05:00Z",
+    "updated": "2026-10-01T18:05:00Z",
+    "sequence": 1,
+    "title": "Dienstreise Messe",
+    "start": "2027-05-17T00:00:00",
+    "duration": "P3D",
+    "showWithoutTime": true,
+    "status": "tentative",
+    "lumbrecode.de:statusCategory": "pending",
+    "lumbrecode.de:statusCode": "pending",
+    "lumbrecode.de:blocksTimeOff": true
+  }
+}

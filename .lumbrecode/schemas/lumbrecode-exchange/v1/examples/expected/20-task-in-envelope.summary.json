@@ -1,0 +1,27 @@
+{
+  "summaryVersion": 1,
+  "fixture": "20-task-in-envelope.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.was_there_something",
+      "data": {
+        "kind": "task",
+        "task": {
+          "title": "Schokokuchen backen",
+          "description": "Bitte **dunkle Schokolade** verwenden.",
+          "descriptionContentType": "text/markdown; charset=utf-8",
+          "start": null,
+          "due": "2027-03-14T10:00:00",
+          "timeZone": "Europe/Berlin",
+          "progress": "needs-action",
+          "percentComplete": 0,
+          "priority": "none",
+          "keywords": [],
+          "links": [],
+          "children": []
+        }
+      }
+    }
+  ]
+}

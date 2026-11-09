@@ -1,0 +1,25 @@
+{
+  "summaryVersion": 1,
+  "fixture": "03-trip-planned.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.vacation_planner",
+      "data": {
+        "kind": "event",
+        "uid": "550e8400-e29b-41d4-a716-446655440003",
+        "sequence": 2,
+        "title": "Norwegen",
+        "description": "Route steht, noch nichts gebucht.",
+        "start": "2027-06-05",
+        "duration": "P15D",
+        "statusCategory": "tentative",
+        "statusCode": "planned",
+        "eventTypes": [
+          "https://lumbrecode.de/ns/event-type/trip"
+        ],
+        "blocksTimeOff": false
+      }
+    }
+  ]
+}

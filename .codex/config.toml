@@ -1,0 +1,44 @@
+# Codex agent configuration for flutter-app-template
+# See: https://docs.openai.com/codex/
+
+[project]
+name = "flutter-app-template"
+description = "Flutter App Template – Monorepo for mobile app, backend, docs, and design"
+
+# Files an agent should read first to understand the project
+entry_files = [
+  "AGENTS.md",
+  "README.md",
+  ".github/copilot-instructions.md",
+  "docs/architecture/arc42/01-introduction-and-goals.md",
+  "docs/architecture/adr/0001-monorepo.md",
+]
+
+# Normative sources (authoritative for decisions)
+normative_paths = [
+  "docs/architecture/",
+  "docs/api/",
+  "docs/operations/",
+  "AGENTS.md",
+  ".github/copilot-instructions.md",
+  ".github/instructions/",
+]
+
+# Non-normative: do NOT use for decisions unless explicitly asked
+excluded_paths = [
+  "drafts/",
+]
+
+# MCP servers available to the agent
+# Google Stitch (design-to-code) — auth: npx @_davideast/stitch-mcp init
+# or STITCH_API_KEY env var. See docs/operations/stitch-mcp.md.
+[mcp_servers.stitch]
+command = "npx"
+args = ["-y", "@_davideast/stitch-mcp", "proxy"]
+
+# Quality checks to run before completing work
+[checks]
+mobile = "cd apps/mobile_app && flutter analyze && flutter test"
+backend = "cd services/api && dart analyze && dart test"
+backend_node = "cd backend && npm run lint && npm test"
+format = "cd services/api && dart format --output=none --set-exit-if-changed ."

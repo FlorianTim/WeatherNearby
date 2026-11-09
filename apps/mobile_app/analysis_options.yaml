@@ -1,0 +1,26 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    # `analyzer.plugins` is the legacy analyzer plugin system, which newer Dart
+    # SDKs flag as deprecated. custom_lint (and therefore riverpod_lint) has not
+    # migrated to the new plugin system yet, so the declaration below has to
+    # stay and the deprecation warning has to be muted -- `flutter analyze`
+    # exits non-zero on warnings and would otherwise break CI.
+    # Remove both entries once custom_lint supports the new plugin system.
+    analysis_options_deprecated_plugins: ignore
+    # Older SDKs do not know the code above and would report it as an
+    # unrecognized diagnostic code, so CI stays green on both SDK generations.
+    unrecognized_error_code: ignore
+  plugins:
+    - custom_lint
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**

@@ -1,0 +1,12 @@
+name: feature_flags
+description: Feature flag helper package
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: any

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED SOURCE - see scripts/bootstrap/android-res/README.md
+
+     WITHOUT THIS FILE the values-night LaunchTheme wins on Android 12+ in dark
+     mode and drops the system-splash attributes entirely - the app falls back
+     to the default launcher-icon splash, but only in dark mode, which is why
+     it survives testing. Identical to values-v31 on purpose. -->
+<resources>
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowSplashScreenBackground">@color/splash_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="android:windowBackground">@color/splash_background</item>
+    </style>
+
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@color/splash_background</item>
+    </style>
+</resources>

@@ -1,0 +1,63 @@
+{
+  "summaryVersion": 1,
+  "fixture": "07-batch-three-events.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.vacation_planner",
+      "data": {
+        "kind": "event",
+        "uid": "550e8400-e29b-41d4-a716-4466554400a2",
+        "sequence": 3,
+        "title": "Betriebsurlaub",
+        "description": null,
+        "start": "2026-09-12",
+        "duration": "P12D",
+        "statusCategory": "confirmed",
+        "statusCode": "approved",
+        "eventTypes": [
+          "https://lumbrecode.de/ns/event-type/time_off"
+        ],
+        "blocksTimeOff": false
+      }
+    },
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.vacation_planner",
+      "data": {
+        "kind": "event",
+        "uid": "550e8400-e29b-41d4-a716-4466554400a1",
+        "sequence": 1,
+        "title": "Italien",
+        "description": null,
+        "start": "2026-09-12",
+        "duration": "P12D",
+        "statusCategory": "confirmed",
+        "statusCode": "booked",
+        "eventTypes": [
+          "https://lumbrecode.de/ns/event-type/trip"
+        ],
+        "blocksTimeOff": false
+      }
+    },
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.vacation_planner",
+      "data": {
+        "kind": "event",
+        "uid": "550e8400-e29b-41d4-a716-4466554400a3",
+        "sequence": 3,
+        "title": "Elternzeit",
+        "description": null,
+        "start": "2027-01-04",
+        "duration": "P28D",
+        "statusCategory": "confirmed",
+        "statusCode": "approved",
+        "eventTypes": [
+          "https://lumbrecode.de/ns/event-type/time_off"
+        ],
+        "blocksTimeOff": false
+      }
+    }
+  ]
+}

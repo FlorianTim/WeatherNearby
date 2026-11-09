@@ -1,0 +1,64 @@
+name: Release
+run-name: "Release"
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Read version
+        id: version
+        run: echo "version=$(cat VERSION)" >> "$GITHUB_OUTPUT"
+
+      # `v1.2.0` is the release, `v1.2.0-rc.1` a pre-release (spec 0008): the
+      # numbers before the first hyphen must be the VERSION file's.
+      - name: Validate tag matches VERSION
+        id: channel
+        run: |
+          TAG="${GITHUB_REF#refs/tags/v}"
+          VERSION="$(cat VERSION)"
+          if [[ "$TAG" == *-* ]]; then
+            BASE="${TAG%%-*}"
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            BASE="$TAG"
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+          if [ "$BASE" != "$VERSION" ]; then
+            echo "ERROR: Tag v$TAG does not match VERSION file ($VERSION)"
+            exit 1
+          fi
+          echo "name=v$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Generate release notes from CHANGELOG
+        id: notes
+        run: |
+          # Extract notes for current version from CHANGELOG.md
+          VERSION="$(cat VERSION)"
+          NOTES=$(awk "/^## \[$VERSION\]/{flag=1; next} /^## \[/{flag=0} flag" CHANGELOG.md)
+          if [ -z "$NOTES" ]; then
+            NOTES="Release v$VERSION"
+          fi
+          echo "notes<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$NOTES" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          name: "${{ steps.channel.outputs.name }}"
+          body: ${{ steps.notes.outputs.notes }}
+          draft: false
+          prerelease: ${{ steps.channel.outputs.prerelease == 'true' }}

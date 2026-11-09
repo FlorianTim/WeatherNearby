@@ -1,0 +1,23 @@
+{
+  "summaryVersion": 1,
+  "fixture": "39-blocker-epoch-millis-sequence-update.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.packzeit",
+      "data": {
+        "kind": "event",
+        "uid": "f701d99a-55df-49b1-878b-644a90fdc445",
+        "sequence": 1786181415000,
+        "title": "Betriebsurlaub",
+        "description": null,
+        "start": "2027-12-27",
+        "duration": "P7D",
+        "statusCategory": "confirmed",
+        "statusCode": "confirmed",
+        "eventTypes": [],
+        "blocksTimeOff": true
+      }
+    }
+  ]
+}

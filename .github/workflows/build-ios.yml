@@ -1,0 +1,68 @@
+name: Build iOS
+run-name: "Build iOS"
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "ios-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  ios-build:
+    runs-on: ${{ vars.RUNNER_MACOS || 'macos-15-intel' }}
+    defaults:
+      run:
+        working-directory: apps/mobile_app
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          # Exact on purpose. A floating 3.x cannot be governed: there is
+          # no commit to build, so the SDK changes underneath the repository
+          # with no pull request and no gate. Flutter 3.47.2 shipped a new
+          # analyzer diagnostic as a patch release and turned CI red here on
+          # 2026-09-03, a week after 3.47.1 was green. Renovate raises this
+          # pin as a normal, reviewable pull request.
+          flutter-version: 3.47.1
+          # Note the input names differ from the previous action:
+          # here `cache` is the SDK and `pub-cache` the dependencies.
+          cache: true
+          pub-cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Check for native iOS project
+        id: ios_check
+        shell: bash
+        run: |
+          if [ -d "ios" ] && [ -f "ios/Runner.xcodeproj/project.pbxproj" -o -f "ios/Runner.xcworkspace/contents.xcworkspacedata" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Explain missing iOS project
+        if: steps.ios_check.outputs.present != 'true'
+        run: |
+          echo "iOS project not found."
+          echo "Run ./scripts/bootstrap_ios.sh locally and commit generated ios/ files."
+
+      - name: Build unsigned iOS app
+        if: steps.ios_check.outputs.present == 'true'
+        run: flutter build ios --release --no-codesign --dart-define=APP_FLAVOR=prod
+
+      - name: Upload iOS build artifacts
+        if: steps.ios_check.outputs.present == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: ios-build-artifacts
+          path: |
+            apps/mobile_app/build/ios/iphoneos/**

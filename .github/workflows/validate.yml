@@ -1,0 +1,76 @@
+name: Validate Repository
+run-name: "Validate Repository"
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check VERSION file exists
+        run: test -f VERSION
+
+      - name: Check VERSION matches app pubspec version
+        run: |
+          version_file="$(tr -d '[:space:]' < VERSION)"
+          pubspec_version="$(grep -E '^version:' apps/mobile_app/pubspec.yaml | sed -E 's/version:[[:space:]]*//' | cut -d+ -f1)"
+          if [ "$version_file" != "$pubspec_version" ]; then
+            echo "::error::VERSION ($version_file) != apps/mobile_app/pubspec.yaml version ($pubspec_version)"
+            exit 1
+          fi
+          echo "VERSION and pubspec.yaml agree: $version_file"
+
+      - name: Validate OpenSpec app specifications
+        run: bash scripts/validate_openspec.sh
+
+      - name: Check required docs exist
+        run: |
+          for f in \
+            README.md \
+            AGENTS.md \
+            CONTRIBUTING.md \
+            SECURITY.md \
+            LICENSE \
+            CHANGELOG.md \
+            .editorconfig \
+            .gitattributes \
+            docs/architecture/arc42/01-introduction-and-goals.md \
+            docs/api/openapi.yaml; do
+            if [ ! -f "$f" ]; then
+              echo "MISSING: $f"
+              exit 1
+            fi
+          done
+          echo "All required files present."
+
+      - name: Check ADR naming convention
+        run: |
+          # ADR files must match pattern: NNNN-<slug>.md
+          # Exceptions: README.md and the ADR template (_template.md)
+          for f in docs/architecture/adr/*.md; do
+            name="$(basename "$f")"
+            if [ "$name" = "README.md" ] || [ "$name" = "_template.md" ]; then continue; fi
+            if ! echo "$name" | grep -qE '^[0-9]{4}-[a-z0-9-]+\.md$'; then
+              echo "Invalid ADR filename: $name (expected NNNN-slug.md)"
+              exit 1
+            fi
+          done
+          echo "ADR naming convention OK."
+
+      - name: Check glossary CSV exists
+        run: test -f docs/architecture/glossary.csv

@@ -1,0 +1,63 @@
+schemaVersion: 1
+locale: en
+
+# One source, two renderings: this file is published on the public site AND
+# bundled into the app (assets/help/faq_en.md). Do not edit the generated
+# files - edit this one.
+
+categories:
+  - id: data
+    title: Your data
+    entries:
+      - id: where-stored
+        question: Where is my data stored?
+        answerMarkdown: |
+          In a database on this device. There is no account, no server and no
+          background upload. See **Settings → Privacy and data**.
+      - id: delete-everything
+        question: How do I delete everything?
+        answerMarkdown: |
+          **Settings → Privacy and data → Delete app data.** It clears all
+          content and keeps your settings. To put the settings back to their
+          defaults too, use **Reset settings** - that one keeps your content.
+      - id: offline
+        question: Does the app work offline?
+        answerMarkdown: |
+          Yes. Everything, including this FAQ and the manual, is bundled with
+          the app.
+  - id: using-it
+    title: Using the app
+    entries:
+      - id: language
+        question: Can I change the language?
+        answerMarkdown: |
+          **Settings → Language.** The first option follows your device
+          language and is the default.
+      - id: permissions
+        question: Why does the app ask for a permission only later?
+        answerMarkdown: |
+          Permissions are requested by the feature that needs them, at the
+          moment it needs them, with an explanation first. An app that asks
+          for everything on the first screen gets denied, and a denied
+          permission is hard to recover.
+      - id: pro
+        question: What does "Pro" mean? Do I have to pay?
+        answerMarkdown: |
+          No. All features are currently free. The Pro page shows the
+          entitlement status; purchases are not enabled in this version.
+  - id: trouble
+    title: When something goes wrong
+    entries:
+      - id: did-not-start
+        question: The app did not start. What now?
+        answerMarkdown: |
+          The recovery screen offers **Try again**, which runs the startup
+          sequence from the top. If it keeps failing, use **Report the
+          problem** - the mail carries the app version and device details,
+          never your content.
+      - id: report-bug
+        question: How do I report a bug or send feedback?
+        answerMarkdown: |
+          **Settings → About and help.** There is a support address, a
+          feedback address and a bug report that attaches the technical
+          details automatically.

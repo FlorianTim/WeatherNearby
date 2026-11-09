@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem drafts -Recurse | ForEach-Object { $_.FullName.Replace\\(\\(Get-Location\\).Path + '\\\\', ''\\) })",
+      "PowerShell(git rm apps/mobile_app/assets/animations/lumbrecode_splash_placeholder.json)",
+      "PowerShell(git rm -f apps/mobile_app/assets/animations/lumbrecode_splash_placeholder.json)",
+      "PowerShell(powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\KROSCH~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Workspace-FlorianTim-flutter-app-template\\\\f974a32e-ef31-46dd-bd4b-154125a05f8e\\\\scratchpad\\\\parse_check.ps1\")",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:codelabs.developers.google.com)",
+      "PowerShell(Get-ChildItem backend -Recurse -File | ForEach-Object { $_.FullName.Replace\\(\\(Get-Location\\).Path + '\\\\backend\\\\', ''\\) }; git ls-files backend | Select-Object -First 50)",
+      "PowerShell(git ls-tree -r HEAD --name-only -- backend)",
+      "PowerShell(git fetch origin main --quiet)",
+      "PowerShell($files = '.github\\\\workflows\\\\copilot-setup-steps.yml','.github\\\\workflows\\\\ci-mobile.yml','.github\\\\workflows\\\\ci-backend.yml','.github\\\\workflows\\\\build-ios.yml','.github\\\\workflows\\\\build-android.yml'; foreach \\($f in $files\\) { \\(Get-Content $f -Raw\\) -replace 'version: 3\\\\.41\\\\.9', 'version: 3.44.4' | Set-Content $f -NoNewline }; Select-String -Path $files -Pattern 'version: 3\\\\.\\\\d+' | ForEach-Object { \"$\\($_.Filename\\): $\\($_.Line.Trim\\(\\)\\)\" })",
+      "PowerShell($docs = 'docs\\\\operations\\\\build-windows.md','docs\\\\operations\\\\build-web.md','docs\\\\operations\\\\build-ios.md','docs\\\\operations\\\\build-android.md'; foreach \\($f in $docs\\) { \\(Get-Content $f -Raw\\) -replace '3\\\\.41\\\\.5\\\\+', '3.44+' | Set-Content $f -NoNewline }; Select-String -Path $docs -Pattern 'Flutter SDK' | ForEach-Object { \"$\\($_.Filename\\): $\\($_.Line.Trim\\(\\)\\)\" })",
+      "PowerShell(cd \\(git rev-parse --show-toplevel\\); melos bs)"
+    ]
+  }
+}

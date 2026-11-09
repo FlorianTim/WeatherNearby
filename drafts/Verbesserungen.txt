@@ -1,0 +1,30 @@
+Ja — ich habe das Template gerade einmal komplett durchlaufen (Spec-Phase + Apply), daher sind das hier Beobachtungen aus erster Hand, priorisiert nach Schmerzgrad.
+
+## A. Konkrete Reibungspunkte aus dieser Initialisierung (höchste Priorität)
+
+1. **`bootstrap_mobile.*` zerstört App-Dateien.** `flutter create . --overwrite` hat `pubspec.yaml` (alle Dependencies weg!), `lib/main.dart`, `test/widget_test.dart`, `README.md`, `analysis_options.yaml` und `.gitignore` überschrieben. Ich musste alles per git restore/Neuschreiben retten. Vorschlag: Das Skript sollte diese Dateien vor `flutter create` sichern und danach wiederherstellen (oder nur die Plattformordner aus einem Temp-Create kopieren). Mindestens gehört eine fette Warnung in `template-initialization.md`.
+
+2. **`mobile_app` ist an verstreuten Stellen hartkodiert.** Ich musste den Projektnamen manuell in `docker-compose.yml` (3 Fallback-Bootstraps, zudem ohne `--org`!), `scripts/automation/integration-test/run_web_tests.sh` und im Melos-Script `build:web` (`scope: mobile_app`) nachziehen. Vorschlag: Diese Stellen aus `project.env` speisen oder in die Initializer-Checkliste aufnehmen.
+
+3. **Backend-Entfernung ist auf ~10 Stellen verteilt:** `backend/`, `services/api/`, 2 CI-Workflows, 4 docker-compose-Services, `build.sh`/`build.ps1`/`build-local.ps1`/`pre-commit.sh`/`bootstrap.sh`/`upgrade_deps.sh`, Root-`pubspec.yaml` (workspace), `.codex/config.toml`, Copilot-Instructions, README. Vorschlag: entweder ein `scripts/remove_backend.*`-Helfer oder die Referenzen so bündeln (z. B. eigene compose-Datei per `include`), dass Entfernen = 2–3 Löschungen ist.
+
+4. **Native Ordner im Template committen lohnt nicht.** Die committeten `android/`/`linux/` trugen die alte ID `de.kroschewski.flutter_test_app` und mussten sowieso gelöscht und regeneriert werden; `linux/` wird vom Bootstrap gar nicht neu erzeugt. Vorschlag: im Template gar keine nativen Ordner committen und den Bootstrap zum Pflichtschritt machen — eliminiert die Stale-ID-Falle komplett.
+
+5. **Screenshot-Infrastruktur hängt am Dateinamen `counter_test.dart`** — referenziert in `run_web_tests.sh`, README und `docs/testing/README.md`, inhaltlich aber an den Beispiel-Flow gekoppelt. Vorschlag: im Template schon neutral benennen (z. B. `app_screenshots_test.dart`) und den Target-Pfad nur an einer Stelle definieren.
+
+## B. Kleine fachliche Lücken im Template-Code
+
+6. **Kein Dark Theme:** `buildAppTheme()` hatte nur Light. Ein `buildAppDarkTheme()` + `themeMode: system` gehört m. E. in die Template-Basis (habe ich hier in der App ergänzt — könnte man upstreamen).
+7. **Sprache wird nicht persistiert:** `LocaleNotifier` ist rein in-memory — nach App-Neustart ist die Sprachwahl weg. Kleine Persistenz (Drift/Key-Value) wäre ein besseres Referenzmuster.
+8. **Test-Locale-Falle:** Widget-Tests ohne explizites `locale:` laufen auf `en`, das ARB-Template ist aber `de` — genau daran ist mein erster Test gescheitert. Ein gemeinsamer Test-Helper (`wrapWithL10n(locale: de)`) im Template würde das für jede neue App vorwegnehmen.
+
+## C. Bekannte offene Punkte (standen schon im Review-Draft, weiterhin sinnvoll)
+
+9. **`pubspec.lock` committen:** `.gitignore` enthält `*.lock` — für App-Repos (nicht Libraries) empfiehlt Flutter das Committen. Betrifft Reproduzierbarkeit der CI.
+10. **`VERSION` vs. `pubspec.yaml`-Version:** zwei Quellen ohne Abgleich (Template-Pubspec stand auf `1.0.0+1` bei `VERSION 0.1.0`). Ein Check in `validate.sh` wäre billig.
+11. **OpenSpec-Validierungsskript** (`scripts/validate_openspec.*` + Check in `validate.yml`) — die Checkliste existiert nur als Prosa.
+12. **`.code-workspace` heißt weiter `flutter_app_template.code-workspace`** — der Initializer könnte das Umbenennen übernehmen. (Ist auch in diesem Repo noch so — kann ich im nächsten PR mit erledigen.)
+13. **`.gitattributes` um EOL-Regeln ergänzen:** die `flutter create`-Ausgabe produziert auf Windows Dutzende CRLF-Warnungen beim Committen.
+14. **`api_client`/`feature_flags`-Packages:** in einer No-Backend-App toter Ballast, dürfen aber per Klassifikation nicht gelöscht werden. Der Initializer könnte sie als "optional entfernbar bei `backend_enabled: false`" klassifizieren.
+
+Die Punkte 1–4 würde ich als Erstes angehen — sie machen jede künftige App-Initialisierung deutlich sicherer. Wenn du magst, formuliere ich die Liste als Issues (oder einen Sammel-PR) im Template-Repo; sag mir dann, wo das Template liegt. Ansonsten mache ich nach dem Merge von PR #7 mit Feature 0001 (Onboarding) weiter.

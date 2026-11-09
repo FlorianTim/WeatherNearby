@@ -1,0 +1,23 @@
+openapi: 3.0.3
+info:
+  title: Starter API
+  version: 0.1.0
+paths:
+  /:
+    get:
+      summary: Service info
+      responses:
+        "200":
+          description: OK
+  /health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+  /v1/config:
+    get:
+      summary: Public configuration
+      responses:
+        "200":
+          description: OK

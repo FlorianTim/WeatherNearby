@@ -1,0 +1,60 @@
+name: CI Gate
+run-name: "CI gate"
+
+# Proves that the gating workflows actually produced a result for this PR.
+#
+# A workflow that fails to *start* produces no check run at all. That happened
+# in PR #24: the call to the shared Flutter workflow could not be resolved, the
+# run failed after zero seconds with zero jobs, and the pull request reported
+# MERGEABLE / CLEAN with the gate never having run.
+#
+# Branch protection would catch it, but it needs GitHub Pro or a public
+# repository, and this one is neither. So: no path filters here, on purpose --
+# this workflow runs on every pull request and is the one check that is always
+# present. It cannot block a merge; it makes a missing gate visible.
+#
+# See docs/known-issues.md -> "The quality gate is advisory".
+
+# Actions minutes: pull_request workflows run only on ready pull requests
+# into main (drafts are skipped, "Ready for review" starts them), cancel
+# superseded runs, and no longer re-run on push to main after the merge.
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  gate:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # One entry per workflow that must not fail silently. Anything calling
+        # a reusable workflow from lumbrecode-engineering belongs here.
+        workflow: [ci-mobile.yml]
+    name: "gate (${{ matrix.workflow }})"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      # The script reads the workflow's own `on.pull_request.paths` to decide
+      # whether a run was due, so the path filter has exactly one definition.
+      - name: Verify the gate ran
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python3 scripts/automation/ci/verify_ci_gate.py \
+            --repo "${{ github.repository }}" \
+            --pr "${{ github.event.pull_request.number }}" \
+            --head-sha "${{ github.event.pull_request.head.sha }}" \
+            --workflow "${{ matrix.workflow }}"

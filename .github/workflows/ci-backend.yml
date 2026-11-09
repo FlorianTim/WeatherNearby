@@ -1,0 +1,61 @@
+name: Backend CI
+run-name: "Backend CI"
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "services/api/**"
+      - "packages/shared_models/**"
+      - ".github/**"
+      - "pubspec.yaml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  api-quality:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      # The Dart workspace includes Flutter packages (e.g. design_system),
+      # so Melos bootstrap needs the Flutter SDK to resolve all members.
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          # Exact on purpose. A floating 3.x cannot be governed: there is
+          # no commit to build, so the SDK changes underneath the repository
+          # with no pull request and no gate. Flutter 3.47.2 shipped a new
+          # analyzer diagnostic as a patch release and turned CI red here on
+          # 2026-09-03, a week after 3.47.1 was green. Renovate raises this
+          # pin as a normal, reviewable pull request.
+          flutter-version: 3.47.1
+          # Note the input names differ from the previous action:
+          # here `cache` is the SDK and `pub-cache` the dependencies.
+          cache: true
+          pub-cache: true
+
+      - name: Activate Melos
+        run: dart pub global activate melos
+
+      - name: Install dependencies
+        run: melos bs
+
+      - name: Check formatting
+        run: melos run format:check
+
+      - name: Analyze (Dart packages)
+        run: melos run analyze:dart
+
+      - name: Run tests (Dart packages)
+        run: melos run test:dart

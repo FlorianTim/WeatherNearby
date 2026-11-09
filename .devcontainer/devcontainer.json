@@ -1,0 +1,43 @@
+{
+  // Flutter App Template – Dev Container
+  // Note: Android emulator and iOS builds require host-side tooling.
+  // iOS development requires macOS with Xcode.
+  "name": "Flutter App Template",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+  "features": {
+    "ghcr.io/joshspicer/devcontainer-features/flutter:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17",
+      "installGradle": true
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Dart-Code.dart-code",
+        "Dart-Code.flutter",
+        "GitHub.copilot-chat",
+        "openai.chatgpt",
+        "redhat.vscode-yaml",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "yzhang.markdown-all-in-one",
+        "bierner.markdown-mermaid",
+        "streetsidesoftware.code-spell-checker",
+        "EditorConfig.EditorConfig"
+      ],
+      "settings": {
+        "dart.lineLength": 200,
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "postCreateCommand": "cd apps/mobile_app && flutter pub get && cd ../../services/api && dart pub get",
+  "remoteUser": "vscode"
+}

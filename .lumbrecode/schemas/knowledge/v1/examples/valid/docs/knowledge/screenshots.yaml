@@ -1,0 +1,8 @@
+screenshots:
+  - id: shot.sample.01-home
+    app_id: app.sample
+    feature: feat.sample.calendar
+    screen: Home
+    source: design/screenshots/phone-portrait/01-home.png
+    verification: current
+    privacy: synthetic-data

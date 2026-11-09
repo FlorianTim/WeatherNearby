@@ -1,0 +1,25 @@
+{
+  "summaryVersion": 1,
+  "fixture": "05-trip-booked-seq4-updated.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.vacation_planner",
+      "data": {
+        "kind": "event",
+        "uid": "550e8400-e29b-41d4-a716-446655440000",
+        "sequence": 4,
+        "title": "Italien",
+        "description": "Sommerurlaub, drei Tage verlaengert.",
+        "start": "2026-09-12",
+        "duration": "P12D",
+        "statusCategory": "confirmed",
+        "statusCode": "booked",
+        "eventTypes": [
+          "https://lumbrecode.de/ns/event-type/trip"
+        ],
+        "blocksTimeOff": false
+      }
+    }
+  ]
+}

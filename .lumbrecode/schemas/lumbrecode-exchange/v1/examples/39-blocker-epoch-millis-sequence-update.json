@@ -1,0 +1,28 @@
+{
+  "specversion": "1.0",
+  "id": "f701d99a-55df-49b1-878b-644a90fdc445-1786181415000",
+  "source": "https://lumbrecode.de/apps/packzeit",
+  "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+  "time": "2026-10-17T08:15:00Z",
+  "datacontenttype": "application/jscalendar+json;type=event",
+  "dataschema": "https://lumbrecode.de/schemas/jscalendar-event/v1/jscalendar-event-v1.schema.json",
+  "subject": "f701d99a-55df-49b1-878b-644a90fdc445",
+  "sourceappid": "de.lumbre.code.packzeit",
+  "sourceversion": "1.2.3",
+  "data": {
+    "@type": "Event",
+    "uid": "f701d99a-55df-49b1-878b-644a90fdc445",
+    "created": "2026-06-01T08:00:00Z",
+    "duration": "P7D",
+    "lumbrecode.de:blocksTimeOff": true,
+    "lumbrecode.de:statusCategory": "confirmed",
+    "lumbrecode.de:statusCode": "confirmed",
+    "prodId": "-//LumbreCode//Packzeit 1.2.3//EN",
+    "sequence": 1786181415000,
+    "showWithoutTime": true,
+    "start": "2027-12-27T00:00:00",
+    "status": "confirmed",
+    "title": "Betriebsurlaub",
+    "updated": "2026-10-17T08:15:00Z"
+  }
+}

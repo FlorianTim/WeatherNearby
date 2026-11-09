@@ -1,0 +1,24 @@
+schemaVersion: 1
+app_id: app.sample
+aliases: [sample-app]
+repository: FlorianTim/sample
+central:
+  folder: apps/sample
+  documents:
+    current-state: null
+sources:
+  - path: README.md
+    role: overview
+screenshots:
+  manifest: null
+  directory: design/screenshots/
+  selected:
+    - id: shot.sample.01-home
+      file: design/screenshots/phone-portrait/01-home.png
+      feature: feat.sample.calendar
+      verification: current
+      privacy: synthetic-data
+snapshot:
+  path: docs/knowledge/current-state.md
+  revision: 0123abc
+  last_verified: 2026-10-16

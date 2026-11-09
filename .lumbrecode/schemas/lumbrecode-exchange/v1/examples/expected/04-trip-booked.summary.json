@@ -1,0 +1,25 @@
+{
+  "summaryVersion": 1,
+  "fixture": "04-trip-booked.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.vacation_planner",
+      "data": {
+        "kind": "event",
+        "uid": "550e8400-e29b-41d4-a716-446655440000",
+        "sequence": 2,
+        "title": "Italien",
+        "description": "Sommerurlaub",
+        "start": "2026-09-12",
+        "duration": "P9D",
+        "statusCategory": "confirmed",
+        "statusCode": "booked",
+        "eventTypes": [
+          "https://lumbrecode.de/ns/event-type/trip"
+        ],
+        "blocksTimeOff": false
+      }
+    }
+  ]
+}

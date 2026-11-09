@@ -1,0 +1,23 @@
+{
+  "summaryVersion": 1,
+  "fixture": "36-blocker-mark-withdrawn.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.was_there_something",
+      "data": {
+        "kind": "event",
+        "uid": "7c1e0000-0000-4000-8000-000000000003",
+        "sequence": 2,
+        "title": "Hochzeit Cousine",
+        "description": "Kein Urlaub noetig, Feier am Abend.",
+        "start": "2027-06-19",
+        "duration": "P1D",
+        "statusCategory": "confirmed",
+        "statusCode": "confirmed",
+        "eventTypes": [],
+        "blocksTimeOff": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "editor.formatOnSave": true,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "dart.lineLength": 100,
+    "chat.useAgentsMdFile": true,
+    "chat.useCustomizationsInParentRepositories": true,
+    "chat.instructionsFilesLocations": {
+      ".github/instructions": true,
+      "~/.copilot/instructions": false,
+      ".claude/rules": true,
+      "~/.claude/rules": false
+    },
+    "files.exclude": {
+      "**/.dart_tool": true,
+      "**/build": true,
+      "**/.flutter-plugins": true,
+      "**/.flutter-plugins-dependencies": true
+    },
+    "search.exclude": {
+      "**/.dart_tool": true,
+      "**/build": true,
+      "**/Pods": true,
+      "docs/architecture/generated": true
+    },
+    "markdown.validate.enabled": true,
+    "[dart]": {
+      "editor.defaultFormatter": "Dart-Code.dart-code",
+      "editor.rulers": [
+        100
+      ]
+    },
+    "[markdown]": {
+      "editor.wordWrap": "on"
+    },
+    "chat.tools.terminal.autoApprove": {
+      "Test-Path": true,
+      ".\\scripts\\bootstrap_mobile.ps1": true,
+      "/^powershell -ExecutionPolicy Bypass -File \\.\\\\scripts\\\\bootstrap_mobile\\.ps1$/": {
+        "approve": true,
+        "matchCommandLine": true
+      },
+      "melos": true
+    }
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Flutter: mobile_app (dev)",
+        "request": "launch",
+        "type": "dart",
+        "program": "apps/mobile_app/lib/main.dart",
+        "args": [
+          "--dart-define=APP_FLAVOR=dev",
+          "--dart-define=API_BASE_URL=http://localhost:8080"
+        ]
+      },
+      {
+        "name": "Dart: api",
+        "request": "launch",
+        "type": "dart",
+        "program": "services/api/bin/server.dart"
+      }
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Mobile: pub get",
+        "type": "shell",
+        "command": "flutter pub get",
+        "options": {
+          "cwd": "${workspaceFolder}/apps/mobile_app"
+        },
+        "group": "build"
+      },
+      {
+        "label": "Mobile: analyze",
+        "type": "shell",
+        "command": "flutter analyze",
+        "options": {
+          "cwd": "${workspaceFolder}/apps/mobile_app"
+        },
+        "group": "build"
+      },
+      {
+        "label": "Mobile: test",
+        "type": "shell",
+        "command": "flutter test",
+        "options": {
+          "cwd": "${workspaceFolder}/apps/mobile_app"
+        },
+        "group": "test"
+      },
+      {
+        "label": "API: pub get",
+        "type": "shell",
+        "command": "dart pub get",
+        "options": {
+          "cwd": "${workspaceFolder}/services/api"
+        },
+        "group": "build"
+      },
+      {
+        "label": "API: analyze",
+        "type": "shell",
+        "command": "dart analyze",
+        "options": {
+          "cwd": "${workspaceFolder}/services/api"
+        },
+        "group": "build"
+      },
+      {
+        "label": "API: test",
+        "type": "shell",
+        "command": "dart test",
+        "options": {
+          "cwd": "${workspaceFolder}/services/api"
+        },
+        "group": "test"
+      },
+      {
+        "label": "Validate repo",
+        "type": "shell",
+        "command": "bash scripts/validate.sh",
+        "group": "test"
+      },
+      {
+        "label": "Generate glossary",
+        "type": "shell",
+        "command": "bash scripts/automation/docs/generate_glossary.sh",
+        "group": "build"
+      }
+    ]
+  }
+}

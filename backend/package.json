@@ -1,0 +1,29 @@
+{
+  "name": "@lumbrecode/backend-template",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Optional Node.js backend base for LumbreCode Flutter apps",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "build": "echo \"No build step required (plain ESM JavaScript).\""
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^10.9.1",
+    "prettier": "^3.0.0"
+  }
+}

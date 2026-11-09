@@ -1,0 +1,39 @@
+# EXAMPLE WORKFLOW — not active
+# Rename to triage-ideas.yml to activate.
+#
+# This workflow triggers when ideas.md changes and could create a triage PR.
+# It is intentionally inactive (.yml.example) to avoid automatic changes to main.
+#
+# To activate:
+# 1. Rename this file to triage-ideas.yml
+# 2. Configure the GITHUB_TOKEN or PAT permissions
+# 3. Review and adjust the triage logic
+
+name: Triage Ideas (Example)
+run-name: "Triage new ideas"
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "docs/ideas/simple/ideas.md"
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check for new ideas
+        run: |
+          echo "TODO: Compare ideas.md against processed-index.yml"
+          echo "TODO: Identify new/changed ideas"
+          echo "TODO: Create a triage PR or issue"
+          echo ""
+          echo "This is an example workflow. It does NOT automatically:"
+          echo "- Change main branch"
+          echo "- Implement code"
+          echo "- Run agents without configuration"
+          echo ""
+          echo "See docs/delivery/agent-prompts.md for manual triage prompts."

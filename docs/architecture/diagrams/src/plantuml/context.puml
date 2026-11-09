@@ -1,0 +1,13 @@
+@startuml context
+!theme plain
+
+actor "User" as user
+rectangle "Mobile App\n(Flutter)" as app
+rectangle "Backend API\n(Dart/Shelf)" as api
+database "Database\n(TBD)" as db
+
+user --> app : uses
+app --> api : REST/JSON
+api --> db : queries
+
+@enduml

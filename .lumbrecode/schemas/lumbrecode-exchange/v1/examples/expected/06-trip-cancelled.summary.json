@@ -1,0 +1,25 @@
+{
+  "summaryVersion": 1,
+  "fixture": "06-trip-cancelled.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.vacation_planner",
+      "data": {
+        "kind": "event",
+        "uid": "550e8400-e29b-41d4-a716-446655440000",
+        "sequence": 5,
+        "title": "Italien",
+        "description": "Storniert.",
+        "start": "2026-09-12",
+        "duration": "P12D",
+        "statusCategory": "cancelled",
+        "statusCode": "cancelled",
+        "eventTypes": [
+          "https://lumbrecode.de/ns/event-type/trip"
+        ],
+        "blocksTimeOff": false
+      }
+    }
+  ]
+}

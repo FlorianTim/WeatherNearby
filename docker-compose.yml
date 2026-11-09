@@ -1,0 +1,249 @@
+# Local development services — build, test, and generate docs via Docker.
+#
+# Documentation generation:
+#   docker compose run --rm glossary
+#   docker compose run --rm pdf
+#   docker compose run --rm diagrams-drawio / diagrams-plantuml / diagrams-mermaid
+#   ./scripts/generate.sh          # all docs
+#
+# App builds:
+#   docker compose run --rm mobile-build-web
+#   docker compose run --rm mobile-build-android
+#   ./scripts/build.sh web          # convenience wrapper
+#
+# Quality checks:
+#   docker compose run --rm mobile-analyze
+#   docker compose run --rm mobile-test
+#   docker compose run --rm api-analyze
+#   docker compose run --rm api-test
+#
+# Backend (services defined in docker/compose.api.yml):
+#   docker compose up api-server    # start on port 8080
+
+# All backend API services live in one included file so that removing the
+# backend is a single operation (scripts/remove_backend.sh|ps1).
+include:
+  - docker/compose.api.yml
+
+# Shared Flutter/Dart configuration
+x-flutter: &flutter-common
+  image: ghcr.io/cirruslabs/flutter:stable
+  working_dir: /workspace
+  volumes:
+    - .:/workspace
+    - flutter-pub-cache:/pub-cache
+    # Gradle wrapper distribution + Android dependencies; without it every
+    # APK build re-downloads several hundred MB.
+    - flutter-gradle-cache:/root/.gradle
+    # Debug signing key shared with the host SDK. The image ships none, so a
+    # throw-away container would sign every APK with a fresh key and the
+    # phone would refuse the next update (INSTALL_FAILED_UPDATE_INCOMPATIBLE).
+    - ~/.android:/root/.android
+  environment:
+    - PUB_CACHE=/pub-cache
+
+# Flutter with Chrome for web integration tests
+x-flutter-chrome: &flutter-chrome
+  build:
+    context: .
+    dockerfile: docker/Dockerfile.flutter-chrome
+  working_dir: /workspace
+  volumes:
+    - .:/workspace
+    - flutter-pub-cache:/pub-cache
+    # Gradle wrapper distribution + Android dependencies; without it every
+    # APK build re-downloads several hundred MB.
+    - flutter-gradle-cache:/root/.gradle
+    # Debug signing key shared with the host SDK. The image ships none, so a
+    # throw-away container would sign every APK with a fresh key and the
+    # phone would refuse the next update (INSTALL_FAILED_UPDATE_INCOMPATIBLE).
+    - ~/.android:/root/.android
+  environment:
+    - PUB_CACHE=/pub-cache
+    - CHROME_EXECUTABLE=/usr/bin/google-chrome
+    - DISPLAY=:99
+
+volumes:
+  flutter-pub-cache:
+  flutter-gradle-cache:
+  flutter-gradle-cache:
+
+services:
+  # ── Glossary ───────────────────────────────────────────────
+  glossary:
+    image: python:3.12-slim
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    entrypoint: ["bash", "scripts/automation/docs/generate_glossary.sh"]
+
+  # ── PDF ────────────────────────────────────────────────────
+  pdf:
+    image: pandoc/extra:latest
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        set -e
+        mkdir -p docs/architecture/generated
+
+        # Collect existing arc42 chapters
+        FILES=""
+        for f in docs/architecture/arc42/[0-9]*.md; do
+          [ -f "$$f" ] && FILES="$$FILES $$f"
+        done
+
+        # ADR separator + ADR files
+        if ls docs/architecture/adr/[0-9]*.md 1>/dev/null 2>&1; then
+          ADR_HEADER="/tmp/adr-header.md"
+          printf '\\newpage\n\n# Anhang: Architecture Decision Records\n' > "$$ADR_HEADER"
+          FILES="$$FILES $$ADR_HEADER"
+          for f in docs/architecture/adr/[0-9]*.md; do
+            FILES="$$FILES $$f"
+          done
+        fi
+
+        # Appendices
+        for f in docs/architecture/arc42/9*.md; do
+          [ -f "$$f" ] && FILES="$$FILES $$f"
+        done
+
+        pandoc \
+          --defaults=docs/architecture/pandoc/defaults.yaml \
+          --resource-path=docs/architecture \
+          -o docs/architecture/generated/architecture.pdf \
+          $$FILES
+
+        echo "PDF generated: docs/architecture/generated/architecture.pdf"
+
+  # ── Diagrams ───────────────────────────────────────────────
+  diagrams-drawio:
+    image: rlespinasse/drawio-export:latest
+    volumes:
+      - .:/workspace
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        mkdir -p /workspace/docs/architecture/generated/diagrams
+        SRC=/workspace/docs/architecture/diagrams/src/drawio
+        if ls "$$SRC"/*.drawio 1>/dev/null 2>&1; then
+          for f in "$$SRC"/*.drawio; do
+            drawio-export \
+              --fileext svg \
+              --output /workspace/docs/architecture/generated/diagrams/ \
+              "$$f"
+          done
+          echo "draw.io diagrams rendered."
+        else
+          echo "No draw.io files found."
+        fi
+
+  diagrams-plantuml:
+    image: plantuml/plantuml:latest
+    volumes:
+      - .:/workspace
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        mkdir -p /workspace/docs/architecture/generated/diagrams
+        SRC=/workspace/docs/architecture/diagrams/src/plantuml
+        if ls "$$SRC"/*.puml 1>/dev/null 2>&1; then
+          java -jar /opt/plantuml.jar \
+            -tsvg \
+            -o /workspace/docs/architecture/generated/diagrams/ \
+            "$$SRC"/*.puml
+          echo "PlantUML diagrams rendered."
+        else
+          echo "No PlantUML files found."
+        fi
+
+  diagrams-mermaid:
+    image: minlag/mermaid-cli:latest
+    volumes:
+      - .:/workspace
+    # NOTE: This service renders a single file at a time.
+    # Use scripts/generate.sh or scripts/render_mermaid.sh to loop over all .mmd files.
+
+  # ── Flutter app — builds ───────────────────────────────────
+  mobile-build-web:
+    <<: *flutter-common
+    working_dir: /workspace/apps/mobile_app
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        flutter pub get
+        if [ ! -d web ]; then
+          echo "Bootstrapping web platform (org/name from project.env)..."
+          bash /workspace/scripts/bootstrap_web.sh
+        fi
+        flutter build web --release
+        echo "Web build complete: apps/mobile_app/build/web/"
+
+  mobile-build-android:
+    <<: *flutter-common
+    working_dir: /workspace/apps/mobile_app
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        flutter pub get
+        if [ ! -d android ]; then
+          echo "Bootstrapping Android platform (org/name from project.env)..."
+          bash /workspace/scripts/bootstrap_android.sh
+        fi
+        flutter build apk --release --dart-define=APP_FLAVOR=prod
+        echo "APK build complete: apps/mobile_app/build/app/outputs/flutter-apk/"
+
+  # ── Flutter app — quality checks ───────────────────────────
+  mobile-analyze:
+    <<: *flutter-common
+    working_dir: /workspace/apps/mobile_app
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        flutter pub get
+        flutter analyze
+
+  mobile-test:
+    <<: *flutter-common
+    working_dir: /workspace/apps/mobile_app
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        flutter pub get
+        flutter test
+
+  mobile-integration-test:
+    <<: *flutter-common
+    working_dir: /workspace/apps/mobile_app
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        flutter pub get
+        if [ ! -d linux ]; then
+          echo "Bootstrapping Linux platform (org/name from project.env)..."
+          bash /workspace/scripts/bootstrap_linux.sh
+        fi
+        mkdir -p test_results/screenshots
+        echo "Running integration tests on Linux..."
+        flutter test integration_test/ --device-id=linux
+        echo "Integration tests complete. Screenshots in test_results/screenshots/"
+
+  mobile-integration-test-web:
+    <<: *flutter-chrome
+    working_dir: /workspace/apps/mobile_app
+    entrypoint: ["sh", "-c"]
+    command:
+      - bash /workspace/scripts/automation/integration-test/run_web_tests.sh
+
+  mobile-format-check:
+    <<: *flutter-common
+    working_dir: /workspace/apps/mobile_app
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        flutter pub get
+        dart format --output=none --set-exit-if-changed lib test
+
+  # Backend API services: see docker/compose.api.yml (included above).

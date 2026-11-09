@@ -1,0 +1,25 @@
+# Local knowledge manifest — references, never copies.
+# Validated against .lumbrecode/schemas/knowledge/v1/manifest.schema.json.
+schemaVersion: 1
+app_id: app.<name>
+aliases: []
+repository: <owner/name>
+central:
+  folder: apps/<name>
+  documents:
+    overview: null
+    current-state: null
+    features: null
+    screenshots: null
+    known-issues: null
+sources:
+  - path: README.md
+    role: overview
+screenshots:
+  manifest: null
+  directory: null
+  selected: []
+snapshot:
+  path: null
+  revision: null
+  last_verified: null

@@ -1,0 +1,60 @@
+# OpenSpec app specification — template.
+# Copy to openspec/apps/<app_slug>.openspec.yaml and fill in all fields.
+# The template initializer derives names, package id and splash config from
+# this file. See openspec/README.md for validation rules.
+
+spec_version: 1
+
+company:
+  name: LumbreCode          # do not change
+  domain: LumbreCode.de     # do not change
+  base_package: de.lumbre.code  # do not change
+
+app:
+  # Technical name (Dart package name), usually equal to app_slug.
+  app_name: ""
+  # Human-readable name shown in launchers and stores.
+  app_display_name: ""
+  # Slug used for the package id: de.lumbre.code.<app_slug>
+  # Must match ^[a-z][a-z0-9_]*$
+  app_slug: ""
+  short_description: ""
+  # android, ios, web, windows, linux, macos
+  primary_platforms: [android]
+
+backend:
+  backend_enabled: false
+  # node (backend/) or dart (services/api/) — remove the unused one on apply.
+  backend_flavor: node
+
+features:
+  core_features: []
+
+privacy_requirements:
+  - privacy-by-default, no analytics or crash reporting without opt-in
+  - no external fonts or CDNs without a documented decision
+  - no personal data in logs
+
+security_requirements:
+  - no secrets in the repository; use .env.example with documented names
+  - follow OWASP MASVS (mobile) and OWASP API Security Top 10 (backend)
+
+splash:
+  # Company splash phase always shows "LumbreCode" — not configurable here.
+  splash_screen_app_name: ""
+  # Lottie assets are local placeholders; replace per app.
+  replace_lottie_placeholders: false
+
+initialization:
+  # Only true when this spec is applied to REPLACE the Todo example app.
+  #
+  # SCOPE: this replaces the EXAMPLE FEATURE (lib/features/todos/,
+  # lib/features/greeting/ and their tables, tests and l10n keys). It does
+  # NOT touch the app shell — settings hub, intro, help, privacy, Pro and
+  # about pages, and everything under lib/core/ — which every derived app
+  # inherits working. Deleting lib/features/privacy/ removes the in-app
+  # data-deletion path Google Play requires.
+  #
+  # Binding table: docs/operations/template-initialization.md
+  #                -> "What is kept, adapted and replaced"
+  replace_todo_app: false

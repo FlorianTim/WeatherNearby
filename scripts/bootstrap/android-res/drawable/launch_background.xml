@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED SOURCE - see scripts/bootstrap/android-res/README.md
+
+     Window background before Android 12. Flutter's generated default is white;
+     the brand colour replaces it so the launch window, the first Flutter frame
+     and the splash animation share one surface. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/splash_background" />
+</layer-list>

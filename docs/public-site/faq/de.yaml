@@ -1,0 +1,67 @@
+schemaVersion: 1
+locale: de
+
+# Eine Quelle, zwei Ausspielungen: diese Datei wird auf der öffentlichen
+# Seite veröffentlicht UND in die App gebündelt (assets/help/faq_de.md).
+# Die erzeugten Dateien nicht bearbeiten - diese hier bearbeiten.
+
+categories:
+  - id: daten
+    title: Deine Daten
+    entries:
+      - id: wo-gespeichert
+        question: Wo werden meine Daten gespeichert?
+        answerMarkdown: |
+          In einer Datenbank auf diesem Gerät. Es gibt kein Konto, keinen
+          Server und keinen Upload im Hintergrund. Siehe **Einstellungen →
+          Datenschutz und Daten**.
+      - id: daten-loeschen
+        question: Wie lösche ich alles?
+        answerMarkdown: |
+          **Einstellungen → Datenschutz und Daten → App-Daten löschen.**
+          Das löscht alle Inhalte und behält deine Einstellungen. Wenn auch
+          die Einstellungen wieder auf Standard sollen, nimm **Einstellungen
+          zurücksetzen** - das behält umgekehrt deine Inhalte.
+      - id: offline
+        question: Funktioniert die App offline?
+        answerMarkdown: |
+          Ja. Alles, auch diese Fragen und die Anleitung, ist in der App
+          enthalten.
+  - id: bedienung
+    title: Bedienung
+    entries:
+      - id: sprache
+        question: Kann ich die Sprache umstellen?
+        answerMarkdown: |
+          **Einstellungen → Sprache.** Die erste Option folgt der
+          Gerätesprache und ist die Voreinstellung.
+      - id: berechtigungen
+        question: Warum fragt die App erst später nach einer Berechtigung?
+        answerMarkdown: |
+          Berechtigungen fragt die Funktion an, die sie braucht - in dem
+          Moment, in dem sie sie braucht, und mit einer Erklärung davor.
+          Eine App, die auf dem ersten Bildschirm alles auf einmal verlangt,
+          wird abgelehnt, und eine abgelehnte Berechtigung ist schwer
+          zurückzuholen.
+      - id: pro
+        question: Was bedeutet "Pro"? Muss ich zahlen?
+        answerMarkdown: |
+          Nein. Alle Funktionen sind derzeit kostenlos. Die Pro-Seite zeigt
+          nur den Berechtigungsstatus; Käufe sind in dieser Version nicht
+          aktiviert.
+  - id: probleme
+    title: Wenn etwas nicht geht
+    entries:
+      - id: startet-nicht
+        question: Die App ist nicht gestartet. Was jetzt?
+        answerMarkdown: |
+          Der Wiederherstellungsbildschirm bietet **Erneut versuchen** an, das
+          den Startvorgang von vorn ausführt. Wenn es weiter fehlschlägt,
+          nutze **Problem melden** - die Mail enthält App-Version und
+          Geräteangaben, niemals deine Inhalte.
+      - id: fehler-melden
+        question: Wie melde ich einen Fehler oder gebe Rückmeldung?
+        answerMarkdown: |
+          **Einstellungen → Über die App und Hilfe.** Dort stehen eine
+          Support-Adresse, eine Feedback-Adresse und eine Fehlermeldung, die
+          die technischen Angaben automatisch anhängt.

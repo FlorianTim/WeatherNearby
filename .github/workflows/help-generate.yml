@@ -1,0 +1,61 @@
+name: Generate Bundled Help
+run-name: "Generate Bundled Help"
+
+# The bundled in-app help is generated, never hand-written: one source under
+# docs/public-site/ is rendered here and committed back, the same way the
+# glossary is. A developer edits the source; the workflow owns the output.
+#
+# The local quality gate still runs the same renderer with --check. That is
+# fast feedback on a feature branch, not a second source of truth: if the two
+# ever disagree, this workflow is what lands on main.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "docs/public-site/faq/**"
+      - "docs/public-site/guides/**"
+      - "docs/public-site/screenshots.yaml"
+      - "docs/public-site/screenshot-profiles.json"
+      - "design/screenshots/**"
+      - ".lumbrecode/tooling/docs/**"
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install renderer dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Render bundled help
+        run: |
+          python .lumbrecode/tooling/docs/render_app_help.py \
+            --repo . \
+            --out apps/mobile_app/assets/help \
+            --pattern '{document}_{locale}.md' \
+            --target app
+
+      - name: Commit updated help
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add apps/mobile_app/assets/help
+          if git diff --cached --quiet; then
+            echo "Bundled help already matches docs/public-site/."
+          else
+            git commit -m "docs: regenerate the bundled help from docs/public-site"
+            git pull --rebase
+            git push
+          fi

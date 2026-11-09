@@ -1,0 +1,91 @@
+{
+  "summaryVersion": 1,
+  "fixture": "53-group-packing-list-single-set.json",
+  "kind": "group",
+  "title": "Urlaub Italien - Medikamente",
+  "tasks": [
+    {
+      "title": "Blasenpflaster ×6",
+      "description": null,
+      "descriptionContentType": null,
+      "start": null,
+      "due": null,
+      "timeZone": null,
+      "progress": "in-process",
+      "percentComplete": 50,
+      "priority": "none",
+      "keywords": [
+        "health_medication"
+      ],
+      "links": [],
+      "children": []
+    },
+    {
+      "title": "Kühlakku",
+      "description": null,
+      "descriptionContentType": null,
+      "start": null,
+      "due": "2027-06-12",
+      "timeZone": null,
+      "progress": "needs-action",
+      "percentComplete": 0,
+      "priority": "none",
+      "keywords": [
+        "health_medication",
+        "last-minute"
+      ],
+      "links": [],
+      "children": []
+    },
+    {
+      "title": "Mückenspray",
+      "description": null,
+      "descriptionContentType": null,
+      "start": null,
+      "due": null,
+      "timeZone": null,
+      "progress": "needs-action",
+      "percentComplete": 0,
+      "priority": "low",
+      "keywords": [
+        "health_medication",
+        "to-buy"
+      ],
+      "links": [],
+      "children": []
+    },
+    {
+      "title": "Reiseapotheke",
+      "description": null,
+      "descriptionContentType": null,
+      "start": null,
+      "due": null,
+      "timeZone": null,
+      "progress": "completed",
+      "percentComplete": 100,
+      "priority": "high",
+      "keywords": [
+        "health_medication"
+      ],
+      "links": [],
+      "children": []
+    },
+    {
+      "title": "Sonnencreme 200 ml",
+      "description": null,
+      "descriptionContentType": null,
+      "start": null,
+      "due": null,
+      "timeZone": null,
+      "progress": "needs-action",
+      "percentComplete": 0,
+      "priority": "high",
+      "keywords": [
+        "health_medication",
+        "to-buy"
+      ],
+      "links": [],
+      "children": []
+    }
+  ]
+}

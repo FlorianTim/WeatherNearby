@@ -1,0 +1,22 @@
+targets:
+  $default:
+    builders:
+      freezed:
+        generate_for:
+          include:
+            - lib/features/**
+            - lib/core/**
+      json_serializable:
+        generate_for:
+          include:
+            - lib/features/**
+            - lib/core/**
+      drift_dev:
+        generate_for:
+          include:
+            - lib/core/database/**
+            - lib/features/**/data/**
+      riverpod_generator:
+        generate_for:
+          include:
+            - lib/**

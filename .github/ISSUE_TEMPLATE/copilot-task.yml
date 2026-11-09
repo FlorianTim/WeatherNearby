@@ -1,0 +1,83 @@
+name: Copilot Task
+description: A precisely scoped task for Copilot Coding Agent
+title: "[Copilot]: "
+labels: ["copilot-task"]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: One clear sentence describing the outcome
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Background the agent needs (feature, spec, constraints)
+    validations:
+      required: true
+
+  - type: input
+    id: story-file
+    attributes:
+      label: Story file
+      description: Path to the approved story (e.g. docs/delivery/stories/0001-feature/story-001-slug.md)
+      placeholder: docs/delivery/stories/...
+    validations:
+      required: true
+
+  - type: input
+    id: feature-spec
+    attributes:
+      label: Feature spec
+      description: Path to the feature spec folder
+      placeholder: docs/product/specs/...
+
+  - type: textarea
+    id: relevant-files
+    attributes:
+      label: Relevant files
+      description: Paths the agent should read or modify
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: Testable conditions that define done
+    validations:
+      required: true
+
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of scope
+      description: Explicit boundaries to prevent scope creep
+    validations:
+      required: true
+
+  - type: textarea
+    id: tests-required
+    attributes:
+      label: Tests required
+      description: What tests to write, run, or verify. Include test commands.
+      placeholder: |
+        - Unit tests for ...
+        - Commands: flutter test, dart analyze
+    validations:
+      required: true
+
+  - type: textarea
+    id: forbidden-changes
+    attributes:
+      label: Forbidden changes
+      description: Files or areas the agent must not touch
+
+  - type: textarea
+    id: expected-pr-summary
+    attributes:
+      label: Expected PR summary
+      description: What the resulting PR should look like

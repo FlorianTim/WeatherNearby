@@ -1,0 +1,39 @@
+# App icon generation
+#
+# This file configures flutter_launcher_icons to generate the
+# platform-specific launcher icons (Android, iOS, Web) from the source
+# images below. The native folders (android/, ios/) are NOT committed in
+# this template — they are created by the bootstrap script, so this step
+# has to run after every bootstrap.
+#
+# Usage:
+#   1. Replace the source images with the app icon (see assets/branding/README.md)
+#   2. Run: cd apps/mobile_app && dart run flutter_launcher_icons
+#
+# The template default is the LumbreCode company icon; a concrete app
+# replaces `assets/images/app_icon.png` (and the two adaptive layers)
+# with its own artwork derived from the app specification.
+#
+# See: https://pub.dev/packages/flutter_launcher_icons
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+
+  # Opaque 1024x1024 master (iOS forbids transparency in the App Store icon).
+  image_path: 'assets/images/app_icon.png'
+
+  # Adaptive icon for Android 8+ (transparent foreground on brand background).
+  adaptive_icon_background: '#070A10'
+  adaptive_icon_foreground: 'assets/branding/lumbrecode_adaptive_foreground_432.png'
+  # Themed icons for Android 13+.
+  adaptive_icon_monochrome: 'assets/branding/lumbrecode_monochrome_432.png'
+  min_sdk_android: 21
+
+  # Web favicon + PWA icons. Colors match the brand background (#070A10);
+  # keep them in sync with web/manifest.json and web/index.html.
+  web:
+    generate: true
+    image_path: 'assets/images/app_icon.png'
+    background_color: '#070A10'
+    theme_color: '#070A10'

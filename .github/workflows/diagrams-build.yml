@@ -1,0 +1,32 @@
+name: Render Diagrams
+run-name: "Render Diagrams"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "docs/architecture/diagrams/src/**"
+      - "scripts/automation/docs/render_diagrams.sh"
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Render diagrams
+        run: |
+          chmod +x scripts/automation/docs/render_diagrams.sh
+          bash scripts/automation/docs/render_diagrams.sh
+
+      - name: Upload generated diagrams
+        uses: actions/upload-artifact@v7
+        with:
+          name: generated-diagrams
+          path: docs/architecture/generated/diagrams/
+          retention-days: 30

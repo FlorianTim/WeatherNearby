@@ -1,0 +1,44 @@
+# OpenSpec for the built-in Todo example app.
+# This app is a deliberate part of the template: smoke test, structure and
+# generator reference. Do NOT delete it during general template maintenance.
+
+spec_version: 1
+
+company:
+  name: LumbreCode
+  domain: LumbreCode.de
+  base_package: de.lumbre.code
+
+app:
+  app_name: todoapp
+  app_display_name: Flutter App Template
+  app_slug: todoapp
+  short_description: >
+    Built-in Todo example app demonstrating feature-first structure, Riverpod
+    (generator-based), Freezed models, Drift persistence, go_router navigation
+    and the two-phase splash screen.
+  primary_platforms: [android, web]
+
+backend:
+  backend_enabled: false
+  backend_flavor: node
+
+features:
+  core_features:
+    - create, list, complete and delete todos (local Drift database)
+    - language selection (de/en)
+    - two-phase splash (LumbreCode -> app) with local Lottie placeholders
+
+privacy_requirements:
+  - fully local, no network calls, no analytics
+
+security_requirements:
+  - no secrets, no external runtime dependencies
+
+splash:
+  splash_screen_app_name: Flutter App Template
+  replace_lottie_placeholders: false
+
+initialization:
+  # Never true for the example app itself.
+  replace_todo_app: false

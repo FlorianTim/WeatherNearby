@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED SOURCE - see scripts/bootstrap/android-res/README.md
+
+     Deliberately IDENTICAL to values/styles.xml: the branded splash sequence
+     is dark in both modes, and the native background must match the first
+     Flutter frame in light AND dark. -->
+<resources>
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@color/splash_background</item>
+    </style>
+</resources>

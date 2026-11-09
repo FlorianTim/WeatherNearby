@@ -1,0 +1,23 @@
+name: design_system
+description: Shared Flutter UI primitives and theme
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  # Markdown rendering only. Wrapped by AppMarkdownView; an encapsulation
+  # test asserts this is the single import site. Local rendering, no network.
+  flutter_markdown_plus: ^1.0.0
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

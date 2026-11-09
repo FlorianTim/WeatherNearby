@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lumbrecode.de/schemas/knowledge/v1/manifest.schema.json",
+  "title": "Local knowledge manifest of a LumbreCode repository",
+  "description": "docs/knowledge/manifest.yaml. A small index that ties a repository to its entries in the central knowledge base and points at the app-generated documentation and screenshots the entries draw on. It references; it does not copy content.",
+  "type": "object",
+  "required": ["schemaVersion", "app_id", "repository"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "app_id": {
+      "description": "Stable ID of the documented entity. Usually app.*; template.* or lib.* for template and library repositories.",
+      "type": "string",
+      "pattern": "^(app|template|lib)\\.[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "aliases": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+    "repository": { "type": "string", "minLength": 1 },
+    "central": {
+      "type": "object",
+      "properties": {
+        "folder": { "type": "string", "minLength": 1 },
+        "documents": {
+          "description": "Document role to Drive file ID. null until a verified publication.",
+          "type": "object",
+          "additionalProperties": { "type": ["string", "null"], "pattern": "^[A-Za-z0-9_-]{10,}$" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "role": {
+            "enum": [
+              "overview",
+              "user-guide",
+              "faq",
+              "changelog",
+              "release-notes",
+              "architecture",
+              "technical",
+              "known-issues",
+              "localization",
+              "ui",
+              "specification",
+              "other"
+            ]
+          },
+          "note": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "screenshots": {
+      "type": "object",
+      "properties": {
+        "manifest": { "type": ["string", "null"] },
+        "directory": { "type": ["string", "null"] },
+        "selected": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "file"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^shot\\.[a-z0-9-]+\\.[a-z0-9]+(?:-[a-z0-9]+)*$" },
+              "file": { "type": "string", "minLength": 1 },
+              "feature": { "type": "string", "pattern": "^feat\\." },
+              "drive_file_id": { "type": ["string", "null"] },
+              "verification": { "enum": ["current", "outdated", "unverified"] },
+              "privacy": { "enum": ["synthetic-data", "reviewed", "needs-review"] }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "snapshot": {
+      "type": "object",
+      "properties": {
+        "path": { "type": ["string", "null"] },
+        "revision": { "type": ["string", "null"], "pattern": "^[0-9a-f]{7,40}$" },
+        "last_verified": { "type": ["string", "null"], "format": "date" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

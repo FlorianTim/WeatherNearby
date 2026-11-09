@@ -1,0 +1,13 @@
+# Default owners for the repository
+* @FlorianTim
+
+# Architecture decisions require explicit review
+docs/architecture/adr/ @FlorianTim
+
+# CI workflows require review
+.github/workflows/ @FlorianTim
+
+# Agent configuration
+AGENTS.md @FlorianTim
+.github/copilot-instructions.md @FlorianTim
+.github/instructions/ @FlorianTim

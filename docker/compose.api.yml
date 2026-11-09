@@ -1,0 +1,59 @@
+# Backend API compose services (Dart/Shelf under services/api).
+#
+# Included from the root docker-compose.yml via `include:`. Keeping all
+# backend services in this one file means removing the backend is just:
+#   ./scripts/remove_backend.sh   (or .ps1)
+# which deletes this file and the include reference.
+
+x-flutter: &flutter-common
+  image: ghcr.io/cirruslabs/flutter:stable
+  working_dir: /workspace
+  volumes:
+    - ..:/workspace
+    - flutter-pub-cache:/pub-cache
+  environment:
+    - PUB_CACHE=/pub-cache
+
+volumes:
+  flutter-pub-cache:
+
+services:
+  # ── Backend API — quality checks ───────────────────────────
+  api-analyze:
+    <<: *flutter-common
+    working_dir: /workspace/services/api
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        dart pub get
+        dart analyze
+
+  api-test:
+    <<: *flutter-common
+    working_dir: /workspace/services/api
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        dart pub get
+        dart test
+
+  api-format-check:
+    <<: *flutter-common
+    working_dir: /workspace/services/api
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        dart pub get
+        dart format --output=none --set-exit-if-changed .
+
+  # ── Backend API — run locally ──────────────────────────────
+  api-server:
+    <<: *flutter-common
+    working_dir: /workspace/services/api
+    ports:
+      - "8080:8080"
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        dart pub get
+        dart run bin/server.dart

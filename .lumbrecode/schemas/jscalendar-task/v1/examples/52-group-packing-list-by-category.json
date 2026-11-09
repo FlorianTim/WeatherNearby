@@ -1,0 +1,188 @@
+{
+  "@type": "Group",
+  "uid": "52a00000-0000-4000-8000-000000000000",
+  "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+  "updated": "2026-10-02T09:00:00Z",
+  "title": "Urlaub Italien",
+  "entries": [
+    {
+      "@type": "Task",
+      "uid": "52a00000-0000-4000-8000-000000000101",
+      "percentComplete": 25,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "in-process",
+      "relatedTo": {
+        "52a00000-0000-4000-8000-000000000202": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        },
+        "52a00000-0000-4000-8000-000000000203": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        },
+        "52a00000-0000-4000-8000-000000000204": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        },
+        "52a00000-0000-4000-8000-000000000205": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        }
+      },
+      "title": "Kleidung",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "52a00000-0000-4000-8000-000000000202",
+      "keywords": {
+        "clothing": true
+      },
+      "percentComplete": 66,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "in-process",
+      "relatedTo": {
+        "52a00000-0000-4000-8000-000000000101": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "T-Shirt ×3",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "52a00000-0000-4000-8000-000000000203",
+      "keywords": {
+        "clothing": true
+      },
+      "percentComplete": 100,
+      "priority": 3,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "completed",
+      "relatedTo": {
+        "52a00000-0000-4000-8000-000000000101": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Socken 3 Paar",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "52a00000-0000-4000-8000-000000000204",
+      "keywords": {
+        "clothing": true,
+        "to-buy": true
+      },
+      "priority": 1,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "relatedTo": {
+        "52a00000-0000-4000-8000-000000000101": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Regenjacke",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "52a00000-0000-4000-8000-000000000205",
+      "keywords": {
+        "clothing": true
+      },
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "relatedTo": {
+        "52a00000-0000-4000-8000-000000000101": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Waschmittel 1,5 l",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "52a00000-0000-4000-8000-000000000106",
+      "percentComplete": 50,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "in-process",
+      "relatedTo": {
+        "52a00000-0000-4000-8000-000000000207": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        },
+        "52a00000-0000-4000-8000-000000000208": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        }
+      },
+      "title": "Technik",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "52a00000-0000-4000-8000-000000000207",
+      "keywords": {
+        "electronics": true
+      },
+      "percentComplete": 100,
+      "priority": 9,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "completed",
+      "relatedTo": {
+        "52a00000-0000-4000-8000-000000000106": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Powerbank",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "52a00000-0000-4000-8000-000000000208",
+      "due": "2027-06-12T00:00:00",
+      "keywords": {
+        "electronics": true,
+        "last-minute": true
+      },
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "relatedTo": {
+        "52a00000-0000-4000-8000-000000000106": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "showWithoutTime": true,
+      "title": "Handy-Ladekabel",
+      "updated": "2026-10-02T09:00:00Z"
+    }
+  ]
+}

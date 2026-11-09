@@ -1,0 +1,103 @@
+name: mobile_app
+description: "A new Flutter project."
+publish_to: 'none'
+# Keep in sync with the repo-root VERSION file (checked by validate.sh).
+version: 3.2.1+1
+
+environment:
+  sdk: ^3.12.0
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  intl: any
+
+  app_core: any
+  design_system: any
+  # Entitlements and feature gates (pure Dart, no billing SDK — ADR-0015).
+  feature_flags: any
+  # JSCalendar / Exchange interchange: a tag-pinned dependency on the shared
+  # libraries repository, not an in-repo package (ADR-0017). One block brings
+  # `jscalendar` and `ijson` at the same commit via relative paths. Never a
+  # branch; bump the tag deliberately. Local work across both repositories:
+  # docs/operations/local-library-development.md.
+  task_interchange:
+    git:
+      url: https://github.com/FlorianTim/flutter-libraries.git
+      path: packages/task_interchange
+      ref: interchange-v0.1.0
+
+  flutter_riverpod: ^3.0.0
+  riverpod_annotation: ^3.0.0
+  go_router: ^17.3.0
+  freezed_annotation: ^3.0.0
+  json_annotation: ^4.9.0
+  drift: ^2.22.0
+  drift_flutter: ^0.2.0
+  sqlite3_flutter_libs: ^0.5.0
+  lottie: ^3.5.1
+  shared_preferences: ^2.3.0
+  path_provider: ^2.1.0
+  # Already in the tree via app_core (which exposes LocalDate through
+  # DateValidation); declared here because core/domain/time uses it directly.
+  time_machine2: ^0.14.0
+  url_launcher: ^6.3.0
+  share_plus: ^13.3.0
+  package_info_plus: ^10.2.1
+  device_info_plus: ^13.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  integration_test:
+    sdk: flutter
+
+  image: ^4.5.3
+  flutter_lints: ^6.0.0
+
+  # Generates the native launcher icons from assets/images/app_icon.png.
+  # Must be re-run after every bootstrap (android/, ios/ are not committed).
+  flutter_launcher_icons: ^0.14.3
+
+  # Direct dep for migration fixture tests (raw sqlite3 schema snapshots).
+  sqlite3: ^2.4.0
+
+  riverpod_generator: ^3.0.0
+  riverpod_lint: 3.0.3
+  custom_lint: ^0.8.0
+  freezed: ^3.0.0
+  json_serializable: ^6.9.0
+  drift_dev: ^2.22.0
+  build_runner: ^2.15.1
+  mocktail: ^1.0.0
+
+  # Test-only: faking the path_provider platform in share-cache tests.
+  # Both are already in the tree transitively via path_provider; declared
+  # here because the tests import them directly.
+  path_provider_platform_interface: ^2.1.0
+  plugin_platform_interface: ^2.1.0
+
+flutter:
+  generate: true
+  uses-material-design: true
+
+  assets:
+    # Local placeholder Lottie animations for the two-phase splash screen.
+    # Replace per app; never load splash animations from external URLs.
+    - assets/animations/
+    # Splash fallbacks when a Lottie asset fails to load: the LumbreCode
+    # company icon (company phase) and the app icon (app phase). The other
+    # files in assets/branding/ are build-time inputs for
+    # flutter_launcher_icons only and are deliberately not bundled.
+    - assets/branding/lumbrecode_icon_512.png
+    - assets/images/app_icon.png
+    # Bundled help documents (manual, FAQ) per language. A derived app
+    # replaces the content; the <document>_<language>.md convention stays.
+    - assets/help/

@@ -1,0 +1,217 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Bootstrap: generate mobile platforms",
+      "type": "shell",
+      "command": "./scripts/bootstrap_mobile.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Bootstrap: generate Android",
+      "type": "shell",
+      "command": "./scripts/bootstrap_android.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Bootstrap: generate iOS",
+      "type": "shell",
+      "command": "./scripts/bootstrap_ios.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Mobile: pub get",
+      "type": "shell",
+      "command": "flutter",
+      "args": [
+        "pub",
+        "get"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/apps/mobile_app"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Mobile: analyze",
+      "type": "shell",
+      "command": "flutter",
+      "args": [
+        "analyze"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/apps/mobile_app"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Mobile: test",
+      "type": "shell",
+      "command": "flutter",
+      "args": [
+        "test"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/apps/mobile_app"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "API: pub get",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "pub",
+        "get"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/services/api"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "API: analyze",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "analyze"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/services/api"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "API: test",
+      "type": "shell",
+      "command": "dart",
+      "args": [
+        "test"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/services/api"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Repo: validate",
+      "type": "shell",
+      "command": "./scripts/validate.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Generate glossary",
+      "type": "shell",
+      "command": "docker compose run --rm glossary",
+      "problemMatcher": []
+    },
+    {
+      "label": "Generate PDF",
+      "type": "shell",
+      "command": "docker compose run --rm pdf",
+      "problemMatcher": []
+    },
+    {
+      "label": "Generate diagrams",
+      "type": "shell",
+      "command": "docker compose run --rm diagrams-drawio; docker compose run --rm diagrams-plantuml; sh scripts/automation/docs/render_mermaid_inner.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Generate all docs",
+      "type": "shell",
+      "command": "./scripts/generate.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: build web",
+      "type": "shell",
+      "command": "./scripts/build.sh web",
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: build Android APK",
+      "type": "shell",
+      "command": "./scripts/build.sh android",
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: analyze all",
+      "type": "shell",
+      "command": "./scripts/build.sh analyze",
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: test all",
+      "type": "shell",
+      "command": "./scripts/build.sh test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: integration tests",
+      "type": "shell",
+      "command": "./scripts/build.sh integration-test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: integration tests (web)",
+      "type": "shell",
+      "command": "./scripts/build.sh integration-web",
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: full CI check",
+      "type": "shell",
+      "command": "./scripts/build.sh ci",
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: start API server",
+      "type": "shell",
+      "command": "./scripts/build.sh api",
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: cleanup",
+      "type": "shell",
+      "command": "./scripts/docker-cleanup.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Docker: cleanup + prune images",
+      "type": "shell",
+      "command": "./scripts/docker-cleanup.sh --prune",
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: run on device",
+      "type": "shell",
+      "command": "./scripts/run_android.sh device",
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: run in emulator",
+      "type": "shell",
+      "command": "./scripts/run_android.sh emulator",
+      "problemMatcher": []
+    },
+    {
+      "label": "Web: run in Chrome",
+      "type": "shell",
+      "command": "./scripts/run_web.sh chrome",
+      "problemMatcher": []
+    },
+    {
+      "label": "Web: run in Firefox",
+      "type": "shell",
+      "command": "./scripts/run_web.sh firefox",
+      "problemMatcher": []
+    },
+    {
+      "label": "Web: run headless (server only)",
+      "type": "shell",
+      "command": "./scripts/run_web.sh headless",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED SOURCE - see scripts/bootstrap/android-res/README.md
+
+     THIS FILE IS THE ONE THAT ACTUALLY APPLIES. Flutter generates both
+     drawable/launch_background.xml and drawable-v21/launch_background.xml,
+     and the -v21 qualifier wins on every device from API 21 upward. Its
+     generated content is `?android:colorBackground` - the SYSTEM background,
+     i.e. white in light mode. Branding only drawable/ leaves that untouched
+     and the launch window stays white on every real device. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/splash_background" />
+</layer-list>

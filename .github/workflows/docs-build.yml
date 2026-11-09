@@ -1,0 +1,44 @@
+name: Build Documentation PDF
+run-name: "Build Documentation PDF"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "docs/architecture/**"
+      - "scripts/automation/docs/build_docs_pdf.sh"
+      - "scripts/automation/docs/generate_glossary.sh"
+      - "scripts/automation/docs/render_diagrams.sh"
+
+permissions:
+  contents: read
+
+jobs:
+  build-pdf:
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Render diagrams
+        run: |
+          chmod +x scripts/automation/docs/render_diagrams.sh
+          bash scripts/automation/docs/render_diagrams.sh
+
+      - name: Generate glossary
+        run: |
+          chmod +x scripts/automation/docs/generate_glossary.sh
+          bash scripts/automation/docs/generate_glossary.sh
+
+      - name: Build PDF
+        run: |
+          chmod +x scripts/automation/docs/build_docs_pdf.sh
+          bash scripts/automation/docs/build_docs_pdf.sh
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v7
+        with:
+          name: architecture-pdf
+          path: docs/architecture/generated/architecture.pdf
+          retention-days: 30

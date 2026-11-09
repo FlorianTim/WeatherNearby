@@ -1,0 +1,58 @@
+name: Architecture Review
+description: Request an architecture impact review for a feature or change
+title: "[Arch Review]: "
+labels: ["architecture"]
+body:
+  - type: input
+    id: feature-spec
+    attributes:
+      label: Feature / Spec
+      description: Path to the feature spec or description of the change
+      placeholder: docs/product/specs/NNNN-feature/
+    validations:
+      required: true
+
+  - type: textarea
+    id: suspected-impact
+    attributes:
+      label: Suspected architecture impact
+      description: What architectural areas might be affected?
+    validations:
+      required: true
+
+  - type: textarea
+    id: arc42-sections
+    attributes:
+      label: Relevant arc42 sections
+      description: Which arc42 chapters might need updates?
+      placeholder: |
+        - 05-building-block-view.md
+        - 08-crosscutting-concepts.md
+
+  - type: textarea
+    id: possible-adrs
+    attributes:
+      label: Possible ADRs
+      description: Are there architectural decisions that need recording?
+
+  - type: textarea
+    id: expected-output
+    attributes:
+      label: Expected output
+      description: What should this review produce?
+      value: |
+        - Assessment of architecture impact
+        - Suggested arc42 updates
+        - Suggested ADRs if needed
+        - Risk documentation
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation expectations
+      description: How can the review be validated?
+
+  - type: markdown
+    attributes:
+      value: |
+        **Important:** This is a documentation and analysis task. No code changes unless only documentation updates are explicitly requested.

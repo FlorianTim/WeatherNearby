@@ -1,0 +1,36 @@
+# Root analysis options shared across the monorepo.
+# Individual packages may extend or override these via their own analysis_options.yaml.
+
+analyzer:
+  exclude:
+    - "**/.dart_tool/**"
+    - "**/build/**"
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+  language:
+    strict-casts: true
+    strict-raw-types: true
+
+linter:
+  rules:
+    # Style
+    prefer_single_quotes: true
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_final_fields: true
+    prefer_final_locals: true
+    sort_child_properties_last: true
+    use_key_in_widget_constructors: true
+
+    # Safety
+    avoid_print: true
+    avoid_relative_lib_imports: true
+    prefer_is_empty: true
+    prefer_is_not_empty: true
+    unnecessary_await_in_return: true
+    unnecessary_null_checks: true
+
+    # Readability
+    annotate_overrides: true
+    prefer_adjacent_string_concatenation: true
+    prefer_interpolation_to_compose_strings: true

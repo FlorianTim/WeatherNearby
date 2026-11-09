@@ -1,0 +1,23 @@
+{
+  "summaryVersion": 1,
+  "fixture": "31-blocker-pending.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.was_there_something",
+      "data": {
+        "kind": "event",
+        "uid": "7c1e0000-0000-4000-8000-000000000002",
+        "sequence": 1,
+        "title": "Dienstreise Messe",
+        "description": null,
+        "start": "2027-05-17",
+        "duration": "P3D",
+        "statusCategory": "pending",
+        "statusCode": "pending",
+        "eventTypes": [],
+        "blocksTimeOff": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,199 @@
+{
+  "summaryVersion": 1,
+  "fixture": "54-group-packing-list-by-person.json",
+  "kind": "group",
+  "title": "Wochenende Harz",
+  "tasks": [
+    {
+      "title": "Alle",
+      "description": null,
+      "descriptionContentType": null,
+      "start": null,
+      "due": null,
+      "timeZone": null,
+      "progress": "in-process",
+      "percentComplete": 25,
+      "priority": "none",
+      "keywords": [],
+      "links": [],
+      "children": [
+        {
+          "title": "Brötchen ×6",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "needs-action",
+          "percentComplete": 0,
+          "priority": "low",
+          "keywords": [
+            "food_drink",
+            "last-minute"
+          ],
+          "links": [],
+          "children": []
+        },
+        {
+          "title": "Kartenspiel",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "completed",
+          "percentComplete": 100,
+          "priority": "none",
+          "keywords": [
+            "camping"
+          ],
+          "links": [],
+          "children": []
+        },
+        {
+          "title": "Wasser 5 l",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "in-process",
+          "percentComplete": 40,
+          "priority": "none",
+          "keywords": [
+            "food_drink"
+          ],
+          "links": [],
+          "children": []
+        },
+        {
+          "title": "Zelt",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "needs-action",
+          "percentComplete": 0,
+          "priority": "high",
+          "keywords": [
+            "camping"
+          ],
+          "links": [],
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "Jonas",
+      "description": null,
+      "descriptionContentType": null,
+      "start": null,
+      "due": null,
+      "timeZone": null,
+      "progress": "in-process",
+      "percentComplete": 33,
+      "priority": "none",
+      "keywords": [],
+      "links": [],
+      "children": [
+        {
+          "title": "Isomatte",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "needs-action",
+          "percentComplete": 0,
+          "priority": "none",
+          "keywords": [
+            "camping",
+            "to-buy"
+          ],
+          "links": [],
+          "children": []
+        },
+        {
+          "title": "Socken 3 Paar",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "in-process",
+          "percentComplete": 33,
+          "priority": "none",
+          "keywords": [
+            "clothing"
+          ],
+          "links": [],
+          "children": []
+        },
+        {
+          "title": "Stirnlampe",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "completed",
+          "percentComplete": 100,
+          "priority": "none",
+          "keywords": [
+            "camping"
+          ],
+          "links": [],
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "Mia",
+      "description": null,
+      "descriptionContentType": null,
+      "start": null,
+      "due": null,
+      "timeZone": null,
+      "progress": "completed",
+      "percentComplete": 100,
+      "priority": "none",
+      "keywords": [],
+      "links": [],
+      "children": [
+        {
+          "title": "Schlafsack",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "completed",
+          "percentComplete": 100,
+          "priority": "high",
+          "keywords": [
+            "camping"
+          ],
+          "links": [],
+          "children": []
+        },
+        {
+          "title": "Wanderschuhe",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "completed",
+          "percentComplete": 100,
+          "priority": "none",
+          "keywords": [
+            "clothing"
+          ],
+          "links": [],
+          "children": []
+        }
+      ]
+    }
+  ]
+}

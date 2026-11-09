@@ -1,0 +1,37 @@
+---
+# Pandoc defaults for arc42 PDF generation
+# Usage: pandoc --defaults=defaults.yaml -o output.pdf input1.md input2.md ...
+
+from: markdown+yaml_metadata_block+pipe_tables+fenced_code_blocks+backtick_code_blocks+auto_identifiers+table_captions+header_attributes+definition_lists
+to: pdf
+pdf-engine: xelatex
+
+metadata:
+  title: "Architekturdokumentation"
+  subtitle: "Flutter App Template"
+  author: "Team"
+  lang: de
+
+variables:
+  date: \today
+  documentclass: scrreprt
+  papersize: a4
+  fontsize: 11pt
+  geometry:
+    - top=2.5cm
+    - bottom=2.5cm
+    - left=2.5cm
+    - right=2.5cm
+  colorlinks: true
+  linkcolor: NavyBlue
+  urlcolor: NavyBlue
+  toc: true
+  toc-depth: 3
+  number-sections: true
+  header-includes: |
+    \usepackage{lmodern}
+    \usepackage{fancyhdr}
+    \pagestyle{fancy}
+    \fancyhead[L]{Architekturdokumentation}
+    \fancyhead[R]{Flutter App Template}
+    \fancyfoot[C]{\thepage}

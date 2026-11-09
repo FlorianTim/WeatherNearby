@@ -1,0 +1,196 @@
+name: _Android Release Build
+run-name: "Android release build"
+
+# Reusable workflow: quality gate + signed AAB/APK build with checksums.
+# Called by android-build-release.yml and android-publish-play.yml.
+#
+# Signing secrets are optional — without them the build falls back to the
+# debug signing config (patched build.gradle.kts), so the template repo can
+# run this workflow end-to-end without real keys.
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: "Git ref to build (defaults to the calling ref)"
+        type: string
+        required: false
+        default: ""
+      flavor:
+        description: "Build flavor: prod (default), prerelease or snapshot. The last two install next to the release (own application id, name and data)."
+        type: string
+        required: false
+        default: "prod"
+    outputs:
+      version_name:
+        value: ${{ jobs.build.outputs.version_name }}
+      version_code:
+        value: ${{ jobs.build.outputs.version_code }}
+    secrets:
+      ANDROID_KEYSTORE_BASE64:
+        required: false
+      ANDROID_KEYSTORE_PASSWORD:
+        required: false
+      ANDROID_KEY_ALIAS:
+        required: false
+      ANDROID_KEY_PASSWORD:
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Quality gate
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          # Exact on purpose. A floating 3.x cannot be governed: there is
+          # no commit to build, so the SDK changes underneath the repository
+          # with no pull request and no gate. Flutter 3.47.2 shipped a new
+          # analyzer diagnostic as a patch release and turned CI red here on
+          # 2026-09-03, a week after 3.47.1 was green. Renovate raises this
+          # pin as a normal, reviewable pull request.
+          flutter-version: 3.47.1
+          # Note the input names differ from the previous action:
+          # here `cache` is the SDK and `pub-cache` the dependencies.
+          cache: true
+          pub-cache: true
+
+      - name: Activate Melos
+        run: dart pub global activate melos
+
+      - name: Install dependencies
+        run: melos bs
+
+      - name: Format + analyze + test
+        run: melos run ci
+
+  build:
+    name: Build AAB + APK
+    needs: quality
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    env:
+      # Step-level `if:` cannot read the secrets context reliably — resolve
+      # the presence check once at job level.
+      HAS_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+    outputs:
+      version_name: ${{ steps.version.outputs.version_name }}
+      version_code: ${{ steps.version.outputs.version_code }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref || github.ref }}
+
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          # Exact on purpose. A floating 3.x cannot be governed: there is
+          # no commit to build, so the SDK changes underneath the repository
+          # with no pull request and no gate. Flutter 3.47.2 shipped a new
+          # analyzer diagnostic as a patch release and turned CI red here on
+          # 2026-09-03, a week after 3.47.1 was green. Renovate raises this
+          # pin as a normal, reviewable pull request.
+          flutter-version: 3.47.1
+          # Note the input names differ from the previous action:
+          # here `cache` is the SDK and `pub-cache` the dependencies.
+          cache: true
+          pub-cache: true
+
+      - name: Resolve version from ref
+        id: version
+        run: bash scripts/release/resolve_android_version.sh "${{ inputs.ref || github.ref }}"
+
+      - name: Install dependencies
+        working-directory: apps/mobile_app
+        run: flutter pub get
+
+      - name: Bootstrap Android platform
+        run: |
+          if [ ! -d apps/mobile_app/android ]; then
+            bash scripts/bootstrap_android.sh
+          fi
+
+      - name: Inject release signing config
+        run: dart tools/patch_android_signing.dart
+
+      - name: Write keystore + key.properties
+        if: ${{ env.HAS_KEYSTORE == 'true' }}
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > apps/mobile_app/android/app/upload-keystore.jks
+          cat > apps/mobile_app/android/key.properties <<EOF
+          storeFile=upload-keystore.jks
+          storePassword=$KEYSTORE_PASSWORD
+          keyAlias=$KEY_ALIAS
+          keyPassword=$KEY_PASSWORD
+          EOF
+
+      - name: Build app bundle
+        working-directory: apps/mobile_app
+        env:
+          # Read by build.gradle.kts for the application id and the name.
+          APP_FLAVOR: ${{ inputs.flavor }}
+        run: |
+          flutter build appbundle --release \
+            --dart-define=APP_FLAVOR=${{ inputs.flavor }} \
+            --build-name="${{ steps.version.outputs.version_name }}" \
+            --build-number="${{ steps.version.outputs.version_code }}"
+
+      - name: Build APK
+        working-directory: apps/mobile_app
+        env:
+          APP_FLAVOR: ${{ inputs.flavor }}
+        run: |
+          flutter build apk --release \
+            --dart-define=APP_FLAVOR=${{ inputs.flavor }} \
+            --build-name="${{ steps.version.outputs.version_name }}" \
+            --build-number="${{ steps.version.outputs.version_code }}"
+
+      - name: Generate checksums
+        working-directory: apps/mobile_app
+        run: |
+          mkdir -p build/release-artifacts
+          cp build/app/outputs/bundle/release/*.aab build/release-artifacts/ || true
+          cp build/app/outputs/flutter-apk/app-release.apk build/release-artifacts/ || true
+          cd build/release-artifacts
+          sha256sum * > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: android-release-${{ steps.version.outputs.version_name }}
+          path: apps/mobile_app/build/release-artifacts/
+
+      - name: Cleanup signing material
+        if: always()
+        run: |
+          rm -f apps/mobile_app/android/key.properties
+          rm -f apps/mobile_app/android/app/upload-keystore.jks

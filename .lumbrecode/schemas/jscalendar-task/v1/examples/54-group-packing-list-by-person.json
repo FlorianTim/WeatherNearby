@@ -1,0 +1,275 @@
+{
+  "@type": "Group",
+  "uid": "54a00000-0000-4000-8000-000000000000",
+  "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+  "updated": "2026-10-02T09:00:00Z",
+  "title": "Wochenende Harz",
+  "entries": [
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-000000000101",
+      "percentComplete": 25,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "in-process",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-000000000202": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        },
+        "54a00000-0000-4000-8000-000000000203": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        },
+        "54a00000-0000-4000-8000-000000000204": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        },
+        "54a00000-0000-4000-8000-000000000205": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        }
+      },
+      "title": "Alle",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-000000000202",
+      "keywords": {
+        "camping": true
+      },
+      "priority": 1,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-000000000101": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Zelt",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-000000000203",
+      "keywords": {
+        "food_drink": true
+      },
+      "percentComplete": 40,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "in-process",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-000000000101": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Wasser 5 l",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-000000000204",
+      "keywords": {
+        "food_drink": true,
+        "last-minute": true
+      },
+      "priority": 9,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-000000000101": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Brötchen ×6",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-000000000205",
+      "keywords": {
+        "camping": true
+      },
+      "percentComplete": 100,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "completed",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-000000000101": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Kartenspiel",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-000000000106",
+      "percentComplete": 100,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "completed",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-000000000207": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        },
+        "54a00000-0000-4000-8000-000000000208": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        }
+      },
+      "title": "Mia",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-000000000207",
+      "keywords": {
+        "camping": true
+      },
+      "percentComplete": 100,
+      "priority": 3,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "completed",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-000000000106": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Schlafsack",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-000000000208",
+      "keywords": {
+        "clothing": true
+      },
+      "percentComplete": 100,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "completed",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-000000000106": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Wanderschuhe",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-000000000109",
+      "percentComplete": 33,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "in-process",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-00000000020a": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        },
+        "54a00000-0000-4000-8000-00000000020b": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        },
+        "54a00000-0000-4000-8000-00000000020c": {
+          "@type": "Relation",
+          "relation": {
+            "child": true
+          }
+        }
+      },
+      "title": "Jonas",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-00000000020a",
+      "keywords": {
+        "camping": true,
+        "to-buy": true
+      },
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-000000000109": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Isomatte",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-00000000020b",
+      "keywords": {
+        "clothing": true
+      },
+      "percentComplete": 33,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "in-process",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-000000000109": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Socken 3 Paar",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "54a00000-0000-4000-8000-00000000020c",
+      "keywords": {
+        "camping": true
+      },
+      "percentComplete": 100,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "completed",
+      "relatedTo": {
+        "54a00000-0000-4000-8000-000000000109": {
+          "@type": "Relation",
+          "relation": {
+            "parent": true
+          }
+        }
+      },
+      "title": "Stirnlampe",
+      "updated": "2026-10-02T09:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "@type": "Group",
+  "uid": "53a00000-0000-4000-8000-000000000000",
+  "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+  "updated": "2026-10-02T09:00:00Z",
+  "title": "Urlaub Italien - Medikamente",
+  "entries": [
+    {
+      "@type": "Task",
+      "uid": "53a00000-0000-4000-8000-000000000201",
+      "keywords": {
+        "health_medication": true
+      },
+      "percentComplete": 100,
+      "priority": 1,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "completed",
+      "title": "Reiseapotheke",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "53a00000-0000-4000-8000-000000000202",
+      "keywords": {
+        "health_medication": true,
+        "to-buy": true
+      },
+      "priority": 3,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "title": "Sonnencreme 200 ml",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "53a00000-0000-4000-8000-000000000203",
+      "keywords": {
+        "health_medication": true
+      },
+      "percentComplete": 50,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "progress": "in-process",
+      "title": "Blasenpflaster ×6",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "53a00000-0000-4000-8000-000000000204",
+      "keywords": {
+        "health_medication": true,
+        "to-buy": true
+      },
+      "priority": 9,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "title": "Mückenspray",
+      "updated": "2026-10-02T09:00:00Z"
+    },
+    {
+      "@type": "Task",
+      "uid": "53a00000-0000-4000-8000-000000000205",
+      "due": "2027-06-12T00:00:00",
+      "keywords": {
+        "health_medication": true,
+        "last-minute": true
+      },
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "showWithoutTime": true,
+      "title": "Kühlakku",
+      "updated": "2026-10-02T09:00:00Z"
+    }
+  ]
+}

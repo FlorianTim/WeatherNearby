@@ -1,0 +1,121 @@
+name: flutter_app_template
+publish_to: none
+environment:
+  sdk: ^3.12.0
+
+workspace:
+  - apps/mobile_app
+  - packages/app_core
+  - packages/design_system
+  - packages/shared_models
+  - packages/api_client
+  - packages/feature_flags
+  - services/api
+
+dev_dependencies:
+  melos: ^7.8.1
+
+melos:
+  scripts:
+    # -------------------------------------------------------------------------
+    # Format
+    # -------------------------------------------------------------------------
+    format:check:
+      exec: dart format --output=none --set-exit-if-changed .
+      description: Check formatting in all packages (fails if unformatted files exist)
+
+    format:fix:
+      exec: dart format .
+      description: Fix formatting in all packages
+
+    # -------------------------------------------------------------------------
+    # Analysis
+    # -------------------------------------------------------------------------
+    analyze:
+      steps:
+        - melos run analyze:flutter
+        - melos run analyze:dart
+      description: Run static analysis across all packages
+
+    analyze:flutter:
+      exec: flutter analyze
+      packageFilters:
+        dependsOn: "flutter"
+      description: Analyze Flutter packages
+
+    analyze:dart:
+      exec: dart analyze
+      packageFilters:
+        noDependsOn: "flutter"
+      description: Analyze pure Dart packages
+
+    # -------------------------------------------------------------------------
+    # Tests
+    # -------------------------------------------------------------------------
+    test:
+      steps:
+        - melos run test:flutter
+        - melos run test:dart
+      description: Run all tests across all packages
+
+    test:flutter:
+      exec: flutter test --coverage
+      packageFilters:
+        dependsOn: "flutter"
+        dirExists: test
+      description: Run Flutter unit/widget tests with coverage
+
+    test:dart:
+      exec: dart test
+      packageFilters:
+        noDependsOn: "flutter"
+        dirExists: test
+      description: Run Dart unit tests
+
+    # -------------------------------------------------------------------------
+    # CI (composite)
+    # -------------------------------------------------------------------------
+    ci:
+      steps:
+        - melos run format:check
+        - melos run analyze
+        - melos run test
+      description: Run the full local CI check (format + analyze + test)
+
+    # -------------------------------------------------------------------------
+    # Build
+    # -------------------------------------------------------------------------
+    # Path-based (not scope-based) so it keeps working when the app package
+    # is renamed during template initialization (see project.env APP_PACKAGE).
+    build:web:
+      run: cd apps/mobile_app && flutter build web --release
+      description: Build the Flutter web release bundle (output apps/mobile_app/build/web/)
+
+    # -------------------------------------------------------------------------
+    # Code Generation
+    # -------------------------------------------------------------------------
+    # Runs ALL code generation: build_runner (Drift/Freezed/Riverpod) AND
+    # gen-l10n. gen-l10n is easy to forget — its output is committed, so CI
+    # fails on codegen drift if it is skipped (see validate.yml/ci-mobile).
+    codegen:
+      steps:
+        - melos run codegen:build_runner
+        - melos run codegen:l10n
+      description: Run all code generation (build_runner + l10n)
+
+    codegen:build_runner:
+      exec: dart run build_runner build --delete-conflicting-outputs
+      packageFilters:
+        dependsOn: "build_runner"
+      description: Run build_runner code generation
+
+    # Path-based so it keeps working when the app package is renamed.
+    codegen:l10n:
+      run: cd apps/mobile_app && flutter gen-l10n
+      description: Generate localizations from ARB files
+
+    codegen:watch:
+      exec: dart run build_runner watch --delete-conflicting-outputs
+      packageFilters:
+        dependsOn: "build_runner"
+      description: Run build_runner in watch mode

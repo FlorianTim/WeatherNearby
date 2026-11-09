@@ -1,0 +1,23 @@
+{
+  "summaryVersion": 1,
+  "fixture": "33-blocker-update-seq2.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.was_there_something",
+      "data": {
+        "kind": "event",
+        "uid": "7c1e0000-0000-4000-8000-000000000001",
+        "sequence": 2,
+        "title": "Familienfeier Tante Anna",
+        "description": "Von Freitag bis Sonntag.",
+        "start": "2027-04-10",
+        "duration": "P3D",
+        "statusCategory": "confirmed",
+        "statusCode": "confirmed",
+        "eventTypes": [],
+        "blocksTimeOff": true
+      }
+    }
+  ]
+}

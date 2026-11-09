@@ -1,0 +1,133 @@
+name: Integration Tests & Report
+run-name: "Integration Tests & Report"
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/integration-test.yml"
+      - "apps/mobile_app/lib/**"
+      - "apps/mobile_app/integration_test/**"
+      - "apps/mobile_app/test_driver/**"
+      - "apps/mobile_app/pubspec.yaml"
+      - "apps/mobile_app/web/**"
+      - "docker-compose.yml"
+      - "docker/Dockerfile.flutter-chrome"
+      - "scripts/automation/integration-test/**"
+      - "docs/public-site/screenshot-profiles.json"
+      - "docs/public-site/screenshots.yaml"
+      - "pubspec.lock"
+      - "VERSION"
+  push:
+    branches: ["main"]
+    paths:
+      - "apps/mobile_app/integration_test/**"
+      - "apps/mobile_app/test_driver/**"
+      - "scripts/automation/integration-test/generate_test_docs.sh"
+      - "scripts/automation/integration-test/generate_test_report_pdf.sh"
+      - "docs/public-site/screenshot-profiles.json"
+      - "docs/public-site/screenshots.yaml"
+      - "VERSION"
+      - ".github/workflows/integration-test.yml"
+      - "apps/mobile_app/lib/**"
+      - "apps/mobile_app/pubspec.yaml"
+      - "apps/mobile_app/web/**"
+      - "docker-compose.yml"
+      - "docker/Dockerfile.flutter-chrome"
+      - "scripts/automation/integration-test/run_web_tests.sh"
+      - "pubspec.lock"
+
+jobs:
+  integration-test-and-report:
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    timeout-minutes: 30
+    permissions:
+      contents: write      # required for creating GitHub Releases
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Read VERSION
+        id: version
+        run: echo "version=$(cat VERSION)" >> "$GITHUB_OUTPUT"
+
+      # Build the custom Flutter+Chrome image
+      - name: Build Flutter-Chrome image
+        run: docker compose build mobile-integration-test-web
+
+      # Single container run — both orientations sequentially
+      - name: Run integration tests (tablet + phone portrait)
+        run: docker compose run --rm mobile-integration-test-web
+
+      - name: Generate Markdown report
+        run: |
+          chmod +x scripts/automation/integration-test/generate_test_docs.sh
+          bash scripts/automation/integration-test/generate_test_docs.sh
+
+      - name: Generate versioned PDF report
+        run: |
+          chmod +x scripts/automation/integration-test/generate_test_report_pdf.sh
+          bash scripts/automation/integration-test/generate_test_report_pdf.sh
+
+      # The documentation is generated here, not on a developer machine.
+      # Committing the images back is what lets the help renderer and the
+      # published site reference them - a screenshot that only exists inside
+      # a release ZIP is a screenshot no document can use.
+      - name: Collect screenshots into design/
+        run: |
+          mkdir -p design/screenshots
+          cp -R apps/mobile_app/test_results/screenshots/. design/screenshots/
+
+      - name: Commit updated screenshots
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add design/screenshots
+          if git diff --cached --quiet; then
+            echo "No screenshot changes."
+          else
+            git commit -m "docs: regenerate screenshots from the integration flow"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Prepare release assets
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          # Rename PDFs: integration-test-report-* → handbook-*
+          for f in docs/testing/generated/integration-test-report-*-v*.pdf; do
+            [ -f "$f" ] || continue
+            newname=$(basename "$f" | sed 's/^integration-test-report-/handbook-/')
+            mv "$f" "docs/testing/generated/$newname"
+          done
+          # Zip all screenshots
+          (cd apps/mobile_app/test_results && zip -r "../../../docs/testing/generated/screenshots-v${VERSION}.zip" screenshots/)
+
+      - name: Create or update GitHub Release
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          TAG="v${VERSION}"
+          # Delete existing release to overwrite (keeps the git tag)
+          gh release delete "$TAG" --yes 2>/dev/null || true
+          sleep 3
+          gh release create "$TAG" \
+            --title "Handbook ${TAG}" \
+            --notes "Auto-generated integration test handbooks for version ${VERSION}." \
+            docs/testing/generated/handbook-*.pdf \
+            docs/testing/generated/screenshots-v${VERSION}.zip
+
+      - name: Upload pull request test artifacts
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v7
+        with:
+          name: integration-report
+          path: |
+            docs/testing/generated/handbook-*.pdf
+            docs/testing/generated/screenshots-v*.zip
+            design/screenshots/
+          if-no-files-found: error
+          retention-days: 7

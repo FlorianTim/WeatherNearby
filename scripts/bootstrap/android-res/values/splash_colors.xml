@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED SOURCE - copied by scripts/bootstrap_android.* after
+     `flutter create`. Edit the template under scripts/bootstrap/android-res/,
+     not this copy: the next bootstrap overwrites it.
+
+     Deliberately its own file and NOT values/colors.xml: flutter_launcher_icons
+     writes ic_launcher_background into colors.xml, and sharing the file would
+     make the two tools overwrite each other. Android merges every file in
+     values/ anyway. -->
+<resources>
+    <!-- The one splash background. Must match the background of the in-app
+         splash animation, otherwise a differently coloured frame flashes at
+         the handover. Same value as adaptive_icon_background in
+         flutter_launcher_icons.yaml. -->
+    <color name="splash_background">#070A10</color>
+</resources>

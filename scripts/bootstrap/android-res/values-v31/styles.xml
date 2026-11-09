@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED SOURCE - see scripts/bootstrap/android-res/README.md
+
+     Android 12+ (API 31) ALWAYS renders a system splash while the process
+     starts; it cannot be suppressed. Branding it is the only way to avoid the
+     default launcher-icon frame.
+
+     Platform attributes are used directly instead of pulling in
+     androidx.core:core-splashscreen - the mandatory splash only exists from
+     API 31 on, so the compat library would add a dependency for a range that
+     does not need it.
+
+     windowSplashScreenAnimatedIcon points at the icon flutter_launcher_icons
+     generates anyway. windowSplashScreenIconBackgroundColor is deliberately
+     NOT set: without an icon background Android gives the icon more visible
+     area. -->
+<resources>
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowSplashScreenBackground">@color/splash_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="android:windowBackground">@color/splash_background</item>
+    </style>
+
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@color/splash_background</item>
+    </style>
+</resources>

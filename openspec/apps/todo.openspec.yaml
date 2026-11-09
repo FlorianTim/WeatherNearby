@@ -1,0 +1,148 @@
+# OpenSpec for the LumbreCode To-do app — the template's NEW reference app.
+#
+# This entry REPLACES the built-in Todo demo (openspec/apps/todoapp.openspec.yaml,
+# apps/mobile_app/lib/features/todos/). See `reasoning:` below for why, and
+# docs/architecture/adr/0011-todo-reference-app.md for the decision record.
+#
+# Status: PLANNED for template 3.1.0. Not applied. `replace_todo_app: true`
+# takes effect only when the initializer is run in apply mode against this
+# entry, which happens in slice 13 of
+# docs/delivery/implementation-plans/0001-todo-reference-app.md — after the
+# replacement does everything the demo did, not before.
+
+spec_version: 1
+
+company:
+  name: LumbreCode
+  domain: LumbreCode.de
+  base_package: de.lumbre.code
+
+app:
+  app_name: todo
+  # Working title. A real product name is open question Q-01 and is a
+  # product-owner decision. `todo` is used consistently everywhere so it can
+  # be replaced in a single find-and-replace pass.
+  app_display_name: LumbreCode To-do
+  app_slug: todo
+  short_description: >
+    Local-first to-do app with lists, subtasks, due and start dates,
+    recurrence, tags, local reminders and Markdown notes. Tasks are modelled
+    on RFC 8984 JSCalendar `Task` and can be imported from and exported to
+    any conforming app. Doubles as the template's reference application and
+    proving ground.
+  primary_platforms: [android]
+
+backend:
+  backend_enabled: false
+  backend_flavor: node
+
+features:
+  core_features:
+    - task capture in one tap; title-only tasks are complete tasks
+    - lists with an undeletable Inbox; move tasks between lists
+    - subtasks, one level deep, single parent, cycle-safe
+    - Markdown notes with the shared design_system editor
+    - start and due dates, with or without a time; priority; tags
+    - views Today / Upcoming / All / Completed, with sort and group
+    - manual reorder on an explicit sort_order column
+    - search over titles and notes
+    - local reminders at due time or a configurable lead time
+    - recurrence (daily/weekly/monthly/yearly, interval, byDay, byMonthDay)
+    - import of JSCalendar Task/Group documents and CloudEvents envelopes,
+      behind an unskippable import review
+    - export and share as a standard JSCalendar document, with a preview
+    - undo for every destructive action, then a 30-day trash
+    - onboarding (at most three screens), settings, about, licenses
+    - German and English throughout
+
+privacy_requirements:
+  - fully local; no backend, no account, no analytics, no crash reporting
+  - no network calls of any kind; notifications are locally scheduled only
+  - task titles and notes are personal free text -- never in logs, never in
+    notification payload logging, never in screenshots taken by tooling
+  - links from an imported document are NEVER fetched automatically, not for
+    a preview and not for a favicon; only http/https open, only on an
+    explicit tap
+  - a shared document carries no device id, no install id and no account
+  - temporary share files live in the app-private cache and are deleted at
+    the next app start
+  - nothing leaves the app without an explicit, previewed user action
+  - showing a task title on the lock screen is a setting; default is to show
+    it (Q-04)
+
+security_requirements:
+  - no secrets, no external runtime dependencies, no remote assets
+  - the Android receive path registers exactly one narrow MIME type
+    (`application/jscalendar+json`) on ACTION_SEND / ACTION_SEND_MULTIPLE --
+    never `*/*` and never `text/plain`
+  - incoming payloads are read only from the URI the intent delivered, under
+    a hard 256 KiB cap, and never from a path derived from document content
+  - import is total: a rejected document writes zero rows
+  - a familiar `uid` is provenance only; it never triggers a merge, a link or
+    a sync
+  - each intent is consumed exactly once; rotation and process restore must
+    not re-trigger an import
+  - the receive path never requests a runtime permission
+  - OWASP MASVS applies as for every LumbreCode app
+
+splash:
+  splash_screen_app_name: LumbreCode To-do
+  replace_lottie_placeholders: true
+
+initialization:
+  # TRUE by intent, applied in slice 13. See the header note.
+  replace_todo_app: true
+
+# ---------------------------------------------------------------------------
+# Non-schema block. Kept here on purpose so a later reader finds the reason
+# next to the switch, rather than only in a git message.
+# ---------------------------------------------------------------------------
+reasoning:
+  why_the_demo_is_replaced: >
+    The built-in Todo demo answers one question -- "does the wiring work?" --
+    with one flat table and three fields. That was the right size for a
+    template whose job was to prove its own scaffolding. It is the wrong size
+    for a template that now has to absorb a Flutter release, a Drift major, a
+    Riverpod change or a new standard before a productive app is derived from
+    it. A smoke test cannot break in the ways that matter, so it cannot warn
+    anybody.
+
+    This app is deliberately richer: foreign keys, multi-table transactions,
+    type converters, chained migrations, a real permission flow, local
+    notification scheduling, an Android receive boundary, an external data
+    contract with golden fixtures, swipe actions with accessible
+    alternatives, and two languages. It has enough surface to actually break.
+
+    It is therefore not "a product that happens to live in the template". It
+    is the template's proving ground and the thing new apps are compared
+    against. Whether it is ever published is undecided and nothing in the
+    design depends on the answer.
+  what_this_costs: >
+    The template stays a template only if the richness lands in the right
+    place. Everything the app needs that is not specifically about to-do
+    lists goes into `packages/` or `core/` in the slice that introduces it --
+    never into `features/tasks/` with a promise to extract it later. The
+    Markdown editor is the headline case: it belongs in
+    `packages/design_system` so every LumbreCode app has the identical
+    text-editing experience. See
+    docs/delivery/implementation-plans/0000-shared-foundations.md.
+  supersedes: openspec/apps/todoapp.openspec.yaml
+  decision_record: docs/architecture/adr/0011-todo-reference-app.md
+  feature_specs:
+    - docs/product/specs/0001-task-and-list-domain/
+    - docs/product/specs/0002-views-search-and-navigation/
+    - docs/product/specs/0003-reminders-and-recurrence/
+    - docs/product/specs/0004-jscalendar-interoperability/
+  implementation_plans:
+    - docs/delivery/implementation-plans/0000-shared-foundations.md
+    - docs/delivery/implementation-plans/0001-todo-reference-app.md
+  external_contract:
+    repository: lumbrecode-engineering
+    guide: docs/JSCALENDAR_TASK_INTEROP.md
+    envelope: docs/LUMBRECODE_EXCHANGE.md
+    schemas:
+      - schemas/jscalendar-task/v1/
+      - schemas/lumbrecode-exchange/v1/
+    note: >
+      The task interchange format is fixed and tested on both sides. It is
+      implemented here, never redesigned here.

@@ -1,0 +1,136 @@
+{
+  "summaryVersion": 1,
+  "fixture": "52-group-packing-list-by-category.json",
+  "kind": "group",
+  "title": "Urlaub Italien",
+  "tasks": [
+    {
+      "title": "Kleidung",
+      "description": null,
+      "descriptionContentType": null,
+      "start": null,
+      "due": null,
+      "timeZone": null,
+      "progress": "in-process",
+      "percentComplete": 25,
+      "priority": "none",
+      "keywords": [],
+      "links": [],
+      "children": [
+        {
+          "title": "Regenjacke",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "needs-action",
+          "percentComplete": 0,
+          "priority": "high",
+          "keywords": [
+            "clothing",
+            "to-buy"
+          ],
+          "links": [],
+          "children": []
+        },
+        {
+          "title": "Socken 3 Paar",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "completed",
+          "percentComplete": 100,
+          "priority": "high",
+          "keywords": [
+            "clothing"
+          ],
+          "links": [],
+          "children": []
+        },
+        {
+          "title": "T-Shirt ×3",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "in-process",
+          "percentComplete": 66,
+          "priority": "none",
+          "keywords": [
+            "clothing"
+          ],
+          "links": [],
+          "children": []
+        },
+        {
+          "title": "Waschmittel 1,5 l",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "needs-action",
+          "percentComplete": 0,
+          "priority": "none",
+          "keywords": [
+            "clothing"
+          ],
+          "links": [],
+          "children": []
+        }
+      ]
+    },
+    {
+      "title": "Technik",
+      "description": null,
+      "descriptionContentType": null,
+      "start": null,
+      "due": null,
+      "timeZone": null,
+      "progress": "in-process",
+      "percentComplete": 50,
+      "priority": "none",
+      "keywords": [],
+      "links": [],
+      "children": [
+        {
+          "title": "Handy-Ladekabel",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": "2027-06-12",
+          "timeZone": null,
+          "progress": "needs-action",
+          "percentComplete": 0,
+          "priority": "none",
+          "keywords": [
+            "electronics",
+            "last-minute"
+          ],
+          "links": [],
+          "children": []
+        },
+        {
+          "title": "Powerbank",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "completed",
+          "percentComplete": 100,
+          "priority": "low",
+          "keywords": [
+            "electronics"
+          ],
+          "links": [],
+          "children": []
+        }
+      ]
+    }
+  ]
+}

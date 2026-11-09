@@ -1,0 +1,23 @@
+{
+  "summaryVersion": 1,
+  "fixture": "34-blocker-cancelled.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.was_there_something",
+      "data": {
+        "kind": "event",
+        "uid": "7c1e0000-0000-4000-8000-000000000002",
+        "sequence": 2,
+        "title": "Dienstreise Messe",
+        "description": "Messe abgesagt.",
+        "start": "2027-05-17",
+        "duration": "P3D",
+        "statusCategory": "cancelled",
+        "statusCode": "cancelled",
+        "eventTypes": [],
+        "blocksTimeOff": true
+      }
+    }
+  ]
+}

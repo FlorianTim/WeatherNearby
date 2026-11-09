@@ -1,0 +1,77 @@
+name: Spec Promotion
+description: Promote a feature candidate to a full feature specification
+title: "[Spec]: "
+labels: ["spec-promotion"]
+body:
+  - type: textarea
+    id: feature-candidate
+    attributes:
+      label: Feature candidate
+      description: Name and description of the candidate from feature-candidates.md
+    validations:
+      required: true
+
+  - type: input
+    id: source-files
+    attributes:
+      label: Source files
+      description: Where the candidate is documented
+      placeholder: docs/product/feature-candidates.md
+    validations:
+      required: true
+
+  - type: input
+    id: target-folder
+    attributes:
+      label: Target feature folder
+      description: Proposed spec folder path
+      placeholder: docs/product/specs/NNNN-feature-name/
+
+  - type: dropdown
+    id: target-release
+    attributes:
+      label: Target release
+      options:
+        - now
+        - next
+        - v1
+        - v2
+        - v3
+        - later
+        - someday
+
+  - type: textarea
+    id: known-goals
+    attributes:
+      label: Known goals
+      description: What we already know about the goals
+
+  - type: textarea
+    id: known-non-goals
+    attributes:
+      label: Known non-goals
+      description: What is explicitly excluded
+
+  - type: textarea
+    id: open-questions
+    attributes:
+      label: Open questions
+      description: Questions that need answers before implementation
+
+  - type: textarea
+    id: expected-output
+    attributes:
+      label: Expected output
+      description: What files should be created (feature.md, requirements.md, etc.)
+      value: |
+        - feature.md
+        - requirements.md
+        - acceptance-criteria.md
+        - open-questions.md
+        - out-of-scope.md
+        - release-plan.md
+
+  - type: markdown
+    attributes:
+      value: |
+        **Important:** This task produces documentation only. No code changes.

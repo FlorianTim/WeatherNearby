@@ -1,0 +1,23 @@
+{
+  "summaryVersion": 1,
+  "fixture": "35-appointment-without-marker.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.upsert.v1",
+      "sourceappid": "de.lumbre.code.was_there_something",
+      "data": {
+        "kind": "event",
+        "uid": "7c1e0000-0000-4000-8000-000000000004",
+        "sequence": 1,
+        "title": "Zahnarzt",
+        "description": null,
+        "start": "2027-03-03",
+        "duration": "P1D",
+        "statusCategory": "confirmed",
+        "statusCode": "confirmed",
+        "eventTypes": [],
+        "blocksTimeOff": false
+      }
+    }
+  ]
+}

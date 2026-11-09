@@ -1,0 +1,10 @@
+schemaVersion: 1
+app_id: app.sample
+repository: FlorianTim/sample
+screenshots:
+  selected:
+    - id: shot.sample.02-settings
+      file: missing.png
+      drive_file_id: 1AbCdEfGhIjKlMnOp
+      verification: outdated
+      privacy: needs-review

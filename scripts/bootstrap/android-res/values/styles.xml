@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GENERATED SOURCE - see scripts/bootstrap/android-res/README.md -->
+<resources>
+    <!-- Shown while the process starts, before Flutter draws anything.
+         Replaces Flutter's white default so no unbranded frame appears.
+         On Android 12+ values-v31 adds the system splash attributes. -->
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+
+    <!-- Applied by the Flutter embedding as soon as the engine takes over
+         (see the NormalTheme meta-data in AndroidManifest.xml). Colours the
+         window BEHIND the Flutter UI - same colour, so the handover shows no
+         seam. -->
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@color/splash_background</item>
+    </style>
+</resources>

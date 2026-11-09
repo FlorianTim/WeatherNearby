@@ -1,0 +1,583 @@
+{
+  "@@locale": "de",
+  "splashTitle": "Flutter App Template",
+  "@splashTitle": {
+    "description": "Title shown on the splash screen"
+  },
+  "settingsTitle": "Einstellungen",
+  "@settingsTitle": {
+    "description": "Title of the settings page (language and appearance)"
+  },
+  "settingsLanguageSection": "Sprache wählen",
+  "@settingsLanguageSection": {
+    "description": "Section heading above the language options"
+  },
+  "settingsSystemLanguage": "Systemsprache",
+  "@settingsSystemLanguage": {
+    "description": "Language option that follows the device language"
+  },
+  "settingsThemeSection": "Erscheinungsbild",
+  "@settingsThemeSection": {
+    "description": "Section heading above the light/dark options"
+  },
+  "settingsSystemTheme": "Systemeinstellung",
+  "@settingsSystemTheme": {
+    "description": "Theme option that follows the device light/dark setting"
+  },
+  "settingsThemeLight": "Hell",
+  "@settingsThemeLight": {
+    "description": "Light theme option"
+  },
+  "settingsThemeDark": "Dunkel",
+  "@settingsThemeDark": {
+    "description": "Dark theme option"
+  },
+  "settingsDataSection": "Daten",
+  "@settingsDataSection": {
+    "description": "Section heading above the destructive data actions"
+  },
+  "settingsDeleteData": "App-Daten löschen",
+  "@settingsDeleteData": {
+    "description": "Destructive action that clears the local database"
+  },
+  "settingsDeleteDataHint": "Löscht alle Inhalte. Sprache und Erscheinungsbild bleiben erhalten.",
+  "@settingsDeleteDataHint": {
+    "description": "States the exact scope: content only, settings survive"
+  },
+  "settingsDeleteDataConfirmTitle": "App-Daten löschen?",
+  "@settingsDeleteDataConfirmTitle": {
+    "description": "Title of the delete confirmation dialog"
+  },
+  "settingsDeleteDataConfirmBody": "Alle lokal gespeicherten Inhalte werden endgültig gelöscht. Das lässt sich nicht rückgängig machen.",
+  "@settingsDeleteDataConfirmBody": {
+    "description": "Names the consequence instead of asking 'are you sure?'"
+  },
+  "settingsDeleteDataDone": "App-Daten gelöscht",
+  "@settingsDeleteDataDone": {
+    "description": "Confirmation shown after the data was cleared"
+  },
+  "commonCancel": "Abbrechen",
+  "@commonCancel": {
+    "description": "Generic cancel action"
+  },
+  "commonDelete": "Löschen",
+  "@commonDelete": {
+    "description": "Generic delete action"
+  },
+  "permissionAllow": "Erlauben",
+  "@permissionAllow": {
+    "description": "Continues from the in-app rationale to the system dialog"
+  },
+  "permissionNotNow": "Nicht jetzt",
+  "@permissionNotNow": {
+    "description": "Declines a permission rationale without consequences"
+  },
+  "permissionOpenSettings": "Einstellungen öffnen",
+  "@permissionOpenSettings": {
+    "description": "Opens the system settings for a permanently denied permission"
+  },
+  "startupErrorTitle": "Die App konnte nicht starten",
+  "@startupErrorTitle": {
+    "description": "Title of the startup recovery screen"
+  },
+  "startupErrorBody": "Beim Start ist ein Fehler aufgetreten, der sich nicht automatisch beheben ließ. Versuche es erneut — bleibt der Fehler bestehen, hilft ein Fehlerbericht.",
+  "@startupErrorBody": {
+    "description": "Explains the situation and the next step"
+  },
+  "startupErrorTask": "Fehlgeschlagener Schritt: {task}",
+  "@startupErrorTask": {
+    "description": "Technical task identifier; never a stack trace",
+    "placeholders": {
+      "task": {
+        "type": "String",
+        "example": "database"
+      }
+    }
+  },
+  "startupErrorRetry": "Erneut versuchen",
+  "@startupErrorRetry": {
+    "description": "Re-runs the startup pipeline"
+  },
+  "startupErrorReport": "Fehler melden",
+  "@startupErrorReport": {
+    "description": "Opens a prefilled bug report mail"
+  },
+  "greetMe": "Begrüß mich!",
+  "@greetMe": {
+    "description": "Label for the greet button"
+  },
+  "greeting": "Hallo! Willkommen zur Beispiel-App.",
+  "@greeting": {
+    "description": "Greeting message shown after tapping the button"
+  },
+  "currentTime": "Aktuelle Uhrzeit",
+  "@currentTime": {
+    "description": "Label shown above the current time"
+  },
+  "todosTitle": "Aufgaben",
+  "@todosTitle": {
+    "description": "Title of the todos page"
+  },
+  "todoCreateTitle": "Neue Aufgabe",
+  "@todoCreateTitle": {
+    "description": "Title of the create todo dialog"
+  },
+  "todoTitleLabel": "Titel",
+  "@todoTitleLabel": {
+    "description": "Label for the todo title field"
+  },
+  "todoDescriptionLabel": "Beschreibung (optional)",
+  "@todoDescriptionLabel": {
+    "description": "Label for the todo description field"
+  },
+  "todoStatusPending": "Offen",
+  "@todoStatusPending": {
+    "description": "Label for pending status"
+  },
+  "todoStatusInProgress": "In Bearbeitung",
+  "@todoStatusInProgress": {
+    "description": "Label for in progress status"
+  },
+  "todoStatusCompleted": "Erledigt",
+  "@todoStatusCompleted": {
+    "description": "Label for completed status"
+  },
+  "todoEmpty": "Keine Aufgaben vorhanden",
+  "@todoEmpty": {
+    "description": "Message shown when there are no todos"
+  },
+  "todoDelete": "Löschen",
+  "@todoDelete": {
+    "description": "Label for delete action"
+  },
+  "todoCreate": "Erstellen",
+  "@todoCreate": {
+    "description": "Label for create button"
+  },
+  "todoRequired": "Pflichtfeld",
+  "@todoRequired": {
+    "description": "Validation message for required fields"
+  },
+  "todoErrorLoading": "Fehler beim Laden",
+  "@todoErrorLoading": {
+    "description": "Error message when loading todos fails"
+  },
+  "todoRetry": "Erneut versuchen",
+  "@todoRetry": {
+    "description": "Label for retry button"
+  },
+  "aboutTitle": "Über & Hilfe",
+  "@aboutTitle": {
+    "description": "Title of the about/help page"
+  },
+  "aboutOpen": "Über & Hilfe öffnen",
+  "@aboutOpen": {
+    "description": "Tooltip of the app bar action that opens the about page"
+  },
+  "aboutSectionHelp": "Hilfe & Informationen",
+  "@aboutSectionHelp": {
+    "description": "Section heading for the informational web links"
+  },
+  "aboutSectionLegal": "Rechtliches",
+  "@aboutSectionLegal": {
+    "description": "Section heading for privacy, data deletion and licenses"
+  },
+  "aboutSectionContact": "Kontakt",
+  "@aboutSectionContact": {
+    "description": "Section heading for the support mail addresses"
+  },
+  "aboutWebsite": "Website",
+  "@aboutWebsite": {
+    "description": "Link to the app landing page"
+  },
+  "aboutFaq": "Häufige Fragen",
+  "@aboutFaq": {
+    "description": "Link to the FAQ page"
+  },
+  "aboutSupport": "Support",
+  "@aboutSupport": {
+    "description": "Link to the support page"
+  },
+  "aboutChangelog": "Was ist neu",
+  "@aboutChangelog": {
+    "description": "Link to the public release notes"
+  },
+  "aboutPrivacy": "Datenschutzerklärung",
+  "@aboutPrivacy": {
+    "description": "Link to the privacy policy"
+  },
+  "aboutDataDeletion": "Daten löschen",
+  "@aboutDataDeletion": {
+    "description": "Link to the data deletion request page"
+  },
+  "aboutLicensesOffline": "Open-Source-Lizenzen",
+  "@aboutLicensesOffline": {
+    "description": "Opens the bundled, offline license page (LicenseRegistry)"
+  },
+  "aboutLicensesOfflineHint": "Alle Pakete dieser App-Version, offline verfügbar",
+  "@aboutLicensesOfflineHint": {
+    "description": "Explains that the bundled license page needs no network"
+  },
+  "aboutLicensesOnline": "Lizenzen im Web",
+  "@aboutLicensesOnline": {
+    "description": "Link to the published license page"
+  },
+  "aboutMailSupport": "Hilfe anfordern",
+  "@aboutMailSupport": {
+    "description": "Opens a mail to the support mailbox"
+  },
+  "aboutMailFeedback": "Feedback senden",
+  "@aboutMailFeedback": {
+    "description": "Opens a mail to the feedback mailbox"
+  },
+  "aboutMailBug": "Fehler melden",
+  "@aboutMailBug": {
+    "description": "Opens a prefilled bug report mail"
+  },
+  "aboutMailBugHint": "Enthält App-Version, Gerät und den letzten Fehler",
+  "@aboutMailBugHint": {
+    "description": "Explains which diagnostic data the bug report mail contains"
+  },
+  "aboutMailPrivacy": "Datenschutzfrage stellen",
+  "@aboutMailPrivacy": {
+    "description": "Opens a mail to the privacy mailbox"
+  },
+  "aboutMailSecurity": "Sicherheitslücke melden",
+  "@aboutMailSecurity": {
+    "description": "Opens a mail to the confidential security mailbox"
+  },
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "description": "App version line at the bottom of the about page",
+    "placeholders": {
+      "version": {
+        "type": "String",
+        "example": "1.2.3+42"
+      }
+    }
+  },
+  "aboutOpenFailed": "Konnte nicht geöffnet werden",
+  "@aboutOpenFailed": {
+    "description": "Shown when no app can handle the link or mail address"
+  },
+  "linkSchemeNotSupported": "Dieser Link kann nicht geöffnet werden",
+  "@linkSchemeNotSupported": {
+    "description": "Shown when a link uses a scheme the app deliberately refuses to open. Only http and https are opened, and only on an explicit tap."
+  },
+  "settingsOpen": "Einstellungen",
+  "@settingsOpen": {
+    "description": "App bar action that opens the settings hub"
+  },
+  "settingsSectionHelp": "Hilfe",
+  "@settingsSectionHelp": {
+    "description": "Section heading above the help rows"
+  },
+  "settingsSectionDataPrivacy": "Daten und Datenschutz",
+  "@settingsSectionDataPrivacy": {
+    "description": "Section heading above the privacy row"
+  },
+  "settingsSectionPro": "Pro",
+  "@settingsSectionPro": {
+    "description": "Section heading above the entitlement row"
+  },
+  "settingsSectionSupport": "Unterstützung",
+  "@settingsSectionSupport": {
+    "description": "Section heading above the about and error-report rows"
+  },
+  "settingsSectionDevelopment": "Entwicklung",
+  "@settingsSectionDevelopment": {
+    "description": "Section heading above the debug-only rows. Never shown in a release build."
+  },
+  "settingsManual": "Anleitung",
+  "@settingsManual": {
+    "description": "Opens the bundled manual"
+  },
+  "settingsFaq": "Häufige Fragen",
+  "@settingsFaq": {
+    "description": "Opens the bundled FAQ"
+  },
+  "settingsShowIntro": "App-Einleitung erneut anzeigen",
+  "@settingsShowIntro": {
+    "description": "Reopens the first-start intro at any time"
+  },
+  "settingsPrivacyEntry": "Datenschutz und Daten",
+  "@settingsPrivacyEntry": {
+    "description": "Opens the in-app privacy page"
+  },
+  "settingsPrivacyEntryHint": "Was gespeichert wird, und wie du es löschst",
+  "@settingsPrivacyEntryHint": {
+    "description": "Subtitle naming what the privacy page contains"
+  },
+  "settingsProEntry": "Pro-Status",
+  "@settingsProEntry": {
+    "description": "Opens the entitlement page"
+  },
+  "settingsAboutEntry": "Über die App und Hilfe",
+  "@settingsAboutEntry": {
+    "description": "Opens the existing about page with external links and support mailboxes"
+  },
+  "settingsReportError": "Letzten Fehler melden",
+  "@settingsReportError": {
+    "description": "Only shown while an uncaught error is buffered"
+  },
+  "settingsReportErrorHint": "Öffnet eine Mail mit den technischen Angaben",
+  "@settingsReportErrorHint": {
+    "description": "States that the mail is prefilled with diagnostics"
+  },
+  "settingsDiagnostics": "Einstellungen-Diagnose",
+  "@settingsDiagnostics": {
+    "description": "Debug-only page listing the settings register"
+  },
+  "settingsDiagnosticsHint": "Nur in Debug-Builds sichtbar",
+  "@settingsDiagnosticsHint": {
+    "description": "Makes clear the row does not exist in a release build"
+  },
+  "settingsResetSettings": "Einstellungen zurücksetzen",
+  "@settingsResetSettings": {
+    "description": "Destructive action that clears every registered setting"
+  },
+  "settingsResetSettingsHint": "Sprache und Erscheinungsbild zurück auf Systemeinstellung. Inhalte bleiben erhalten.",
+  "@settingsResetSettingsHint": {
+    "description": "States the exact scope: settings only, content survives"
+  },
+  "settingsResetSettingsConfirmTitle": "Einstellungen zurücksetzen?",
+  "@settingsResetSettingsConfirmTitle": {
+    "description": "Title of the reset confirmation dialog"
+  },
+  "settingsResetSettingsConfirmBody": "Alle Einstellungen kehren auf ihre Standardwerte zurück. Deine Inhalte bleiben erhalten.",
+  "@settingsResetSettingsConfirmBody": {
+    "description": "Names the consequence instead of asking whether the user is sure"
+  },
+  "settingsResetSettingsDone": "Einstellungen zurückgesetzt",
+  "@settingsResetSettingsDone": {
+    "description": "Confirmation shown after the settings were cleared"
+  },
+  "commonReset": "Zurücksetzen",
+  "@commonReset": {
+    "description": "Confirming label of the reset dialog"
+  },
+  "diagnosticsTitle": "Einstellungen-Diagnose",
+  "@diagnosticsTitle": {
+    "description": "Title of the debug-only diagnostics page"
+  },
+  "diagnosticsIntro": "Alle registrierten Einstellungen mit ihrem gespeicherten Rohwert. Nur lesend.",
+  "@diagnosticsIntro": {
+    "description": "Explains what the diagnostics list shows"
+  },
+  "diagnosticsUnset": "nicht gesetzt",
+  "@diagnosticsUnset": {
+    "description": "Shown instead of a raw value when nothing was ever written"
+  },
+  "helpManualTitle": "Anleitung",
+  "@helpManualTitle": {
+    "description": "Title of the bundled manual page"
+  },
+  "helpFaqTitle": "Häufige Fragen",
+  "@helpFaqTitle": {
+    "description": "Title of the bundled FAQ page"
+  },
+  "helpLoadError": "Das Dokument konnte nicht geladen werden.",
+  "@helpLoadError": {
+    "description": "Shown when a bundled help asset is missing or unreadable"
+  },
+  "privacyTitle": "Datenschutz und Daten",
+  "@privacyTitle": {
+    "description": "Title of the in-app privacy page"
+  },
+  "privacyLocalTitle": "Deine Daten bleiben auf diesem Gerät",
+  "@privacyLocalTitle": {
+    "description": "Headline of the local-storage explanation"
+  },
+  "privacyLocalBody": "Die App speichert ihre Inhalte in einer Datenbank auf diesem Gerät. Es gibt kein Konto, keinen Server und keine Übertragung im Hintergrund. Was du hier löschst, ist weg.",
+  "@privacyLocalBody": {
+    "description": "The storage promise, stated in the app itself"
+  },
+  "privacyPermissionsSection": "Berechtigungen",
+  "@privacyPermissionsSection": {
+    "description": "Section heading above the permission overview. Omitted when the app holds none."
+  },
+  "privacyPermissionGranted": "Erteilt",
+  "@privacyPermissionGranted": {
+    "description": "Permission state"
+  },
+  "privacyPermissionDenied": "Abgelehnt",
+  "@privacyPermissionDenied": {
+    "description": "Permission state"
+  },
+  "privacyPermissionPermanentlyDenied": "Dauerhaft abgelehnt",
+  "@privacyPermissionPermanentlyDenied": {
+    "description": "Permission state that can only be changed in the system settings"
+  },
+  "privacyPermissionNotRequested": "Nicht angefragt",
+  "@privacyPermissionNotRequested": {
+    "description": "Permission state before the app has ever asked"
+  },
+  "privacyDocumentsSection": "Veröffentlichte Dokumente",
+  "@privacyDocumentsSection": {
+    "description": "Section heading above the legal web links"
+  },
+  "privacyContact": "Datenschutz-Anfrage senden",
+  "@privacyContact": {
+    "description": "Opens a mail to the privacy mailbox"
+  },
+  "privacyDangerSection": "Gefahrenbereich",
+  "@privacyDangerSection": {
+    "description": "Section heading above the destructive actions"
+  },
+  "introSkip": "Überspringen",
+  "@introSkip": {
+    "description": "Leaves the intro from any page"
+  },
+  "introNext": "Weiter",
+  "@introNext": {
+    "description": "Advances to the next intro page"
+  },
+  "introStart": "Los geht’s",
+  "@introStart": {
+    "description": "Primary action on the last intro page"
+  },
+  "introWelcomeTitle": "Willkommen",
+  "@introWelcomeTitle": {
+    "description": "Title of the first intro page"
+  },
+  "introWelcomeBody": "Diese App ist aus dem LumbreCode Flutter-Template entstanden. Die nächsten Seiten zeigen kurz, was sie kann.",
+  "@introWelcomeBody": {
+    "description": "Body of the first intro page"
+  },
+  "introFeaturesTitle": "Was die App kann",
+  "@introFeaturesTitle": {
+    "description": "Title of the second intro page"
+  },
+  "introFeaturesBody": "Inhalte anlegen, wiederfinden und bearbeiten — offline, ohne Konto, auf diesem Gerät.",
+  "@introFeaturesBody": {
+    "description": "Body of the second intro page"
+  },
+  "introPrivacyTitle": "Deine Daten",
+  "@introPrivacyTitle": {
+    "description": "Title of the third intro page"
+  },
+  "introPrivacyBody": "Alles bleibt lokal gespeichert. Nichts wird hochgeladen, und du kannst jederzeit alles wieder löschen.",
+  "@introPrivacyBody": {
+    "description": "Body of the third intro page. The same promise the privacy page makes."
+  },
+  "introSettingsTitle": "Sprache und Darstellung",
+  "@introSettingsTitle": {
+    "description": "Title of the fourth intro page, which carries the two settings"
+  },
+  "introSettingsBody": "Beides lässt sich später jederzeit in den Einstellungen ändern.",
+  "@introSettingsBody": {
+    "description": "Body of the fourth intro page"
+  },
+  "introReadyTitle": "Fertig",
+  "@introReadyTitle": {
+    "description": "Title of the last intro page"
+  },
+  "introReadyBody": "Anleitung, Datenschutz und alle Einstellungen findest du jederzeit über das Zahnrad.",
+  "@introReadyBody": {
+    "description": "Body of the last intro page"
+  },
+  "proTitle": "Pro",
+  "@proTitle": {
+    "description": "Title of the entitlement page"
+  },
+  "proStatusFree": "Kostenlose Version",
+  "@proStatusFree": {
+    "description": "Current entitlement, in words"
+  },
+  "proStatusPro": "Pro-Version",
+  "@proStatusPro": {
+    "description": "Current entitlement, in words"
+  },
+  "proAllFree": "Alle Funktionen sind derzeit kostenlos.",
+  "@proAllFree": {
+    "description": "States that nothing is gated. Keeps the row from reading as a paywall."
+  },
+  "proStoreChecking": "Store wird geprüft ...",
+  "@proStoreChecking": {
+    "description": "Store availability is still being fetched"
+  },
+  "proStoreAvailable": "Store verfügbar",
+  "@proStoreAvailable": {
+    "description": "Platform billing answered"
+  },
+  "proStoreUnavailable": "Store nicht verfügbar",
+  "@proStoreUnavailable": {
+    "description": "No platform billing on this device or build"
+  },
+  "proRestore": "Käufe wiederherstellen",
+  "@proRestore": {
+    "description": "Asks the store for a previously bought entitlement"
+  },
+  "proRestoreNone": "Keine Käufe gefunden.",
+  "@proRestoreNone": {
+    "description": "Restore succeeded but found nothing"
+  },
+  "proRestoreRestored": "Pro wurde wiederhergestellt.",
+  "@proRestoreRestored": {
+    "description": "Restore found and applied an entitlement"
+  },
+  "proRestoreFailed": "Der Store ist derzeit nicht erreichbar.",
+  "@proRestoreFailed": {
+    "description": "Restore failed or no store is available"
+  },
+  "proNote": "Diese Seite zeigt den Berechtigungsstatus. Käufe sind in dieser Version noch nicht aktiviert.",
+  "@proNote": {
+    "description": "Explains why there is no price and no buy button (ADR-0015)"
+  },
+  "diagnosticsDefault": "Standard: {value}",
+  "@diagnosticsDefault": {
+    "description": "Default of a setting, shown under its stored value",
+    "placeholders": {
+      "value": {
+        "type": "String",
+        "example": "system"
+      }
+    }
+  },
+  "menuLabel": "Anwendungsmenü",
+  "@menuLabel": {
+    "description": "Accessible label of the menu bar"
+  },
+  "menuFile": "Datei",
+  "@menuFile": {
+    "description": "Title of the File menu"
+  },
+  "menuGoTo": "Gehe zu",
+  "@menuGoTo": {
+    "description": "Title of the menu that jumps between the screens"
+  },
+  "menuHelp": "Hilfe",
+  "@menuHelp": {
+    "description": "Title of the Help menu"
+  },
+  "menuQuit": "Beenden",
+  "@menuQuit": {
+    "description": "Menu entry that quits the desktop application"
+  },
+  "channelDev": "Entwicklung",
+  "@channelDev": {
+    "description": "Name of the development flavor"
+  },
+  "channelSnapshot": "Snapshot – zum Ausprobieren",
+  "@channelSnapshot": {
+    "description": "Name of the snapshot flavor"
+  },
+  "channelStaging": "Staging",
+  "@channelStaging": {
+    "description": "Name of the staging flavor"
+  },
+  "channelPrerelease": "Pre-Release – Testversion vor der Veröffentlichung",
+  "@channelPrerelease": {
+    "description": "Name of the pre-release flavor"
+  },
+  "aboutChannel": "Kanal: {name}",
+  "@aboutChannel": {
+    "description": "Channel line at the bottom of the about page; shown for every build but the release",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Snapshot"
+      }
+    }
+  }
+}

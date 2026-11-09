@@ -1,0 +1,65 @@
+{
+  "summaryVersion": 1,
+  "fixture": "51-group-nested-tasks.json",
+  "kind": "group",
+  "title": "Geburtstag von Mia - 14.03.2027",
+  "tasks": [
+    {
+      "title": "Pappteller mitbringen",
+      "description": null,
+      "descriptionContentType": null,
+      "start": null,
+      "due": null,
+      "timeZone": null,
+      "progress": "needs-action",
+      "percentComplete": 0,
+      "priority": "none",
+      "keywords": [],
+      "links": [],
+      "children": []
+    },
+    {
+      "title": "Schokokuchen backen",
+      "description": "Bitte **dunkle Schokolade** verwenden.",
+      "descriptionContentType": "text/markdown; charset=utf-8",
+      "start": null,
+      "due": "2027-03-14T10:00:00",
+      "timeZone": null,
+      "progress": "needs-action",
+      "percentComplete": 0,
+      "priority": "high",
+      "keywords": [],
+      "links": [],
+      "children": [
+        {
+          "title": "Sahne kaufen",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "completed",
+          "percentComplete": 100,
+          "priority": "none",
+          "keywords": [],
+          "links": [],
+          "children": []
+        },
+        {
+          "title": "Schokolade kaufen",
+          "description": null,
+          "descriptionContentType": null,
+          "start": null,
+          "due": null,
+          "timeZone": null,
+          "progress": "needs-action",
+          "percentComplete": 0,
+          "priority": "none",
+          "keywords": [],
+          "links": [],
+          "children": []
+        }
+      ]
+    }
+  ]
+}

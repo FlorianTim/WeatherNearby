@@ -1,0 +1,21 @@
+{
+  "@type": "Group",
+  "uid": "97a00000-0000-4000-8000-000000000000",
+  "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+  "updated": "2026-10-02T09:00:00Z",
+  "title": "Urlaub Italien",
+  "entries": [
+    {
+      "@type": "Task",
+      "uid": "97a00000-0000-4000-8000-000000000201",
+      "keywords": {
+        "clothing": true,
+        "to-buy": false
+      },
+      "priority": 1,
+      "prodId": "-//LumbreCode//Packzeit 1.0//EN",
+      "title": "Regenjacke",
+      "updated": "2026-10-02T09:00:00Z"
+    }
+  ]
+}

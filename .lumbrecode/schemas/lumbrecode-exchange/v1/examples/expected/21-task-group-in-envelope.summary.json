@@ -1,0 +1,44 @@
+{
+  "summaryVersion": 1,
+  "fixture": "21-task-group-in-envelope.json",
+  "messages": [
+    {
+      "type": "de.lumbrecode.exchange.jscalendar.import.v1",
+      "sourceappid": "de.lumbre.code.was_there_something",
+      "data": {
+        "kind": "group",
+        "title": "Geburtstag von Mia - 14.03.2027",
+        "tasks": [
+          {
+            "title": "Kerzen kaufen",
+            "description": null,
+            "descriptionContentType": null,
+            "start": null,
+            "due": "2027-03-14",
+            "timeZone": null,
+            "progress": "completed",
+            "percentComplete": 100,
+            "priority": "none",
+            "keywords": [],
+            "links": [],
+            "children": []
+          },
+          {
+            "title": "Pappteller mitbringen",
+            "description": null,
+            "descriptionContentType": null,
+            "start": null,
+            "due": null,
+            "timeZone": null,
+            "progress": "needs-action",
+            "percentComplete": 0,
+            "priority": "none",
+            "keywords": [],
+            "links": [],
+            "children": []
+          }
+        ]
+      }
+    }
+  ]
+}

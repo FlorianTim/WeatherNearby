@@ -1,0 +1,30 @@
+# Screenshots the documentation may reference.
+#
+# The capturing integration test
+# (apps/mobile_app/integration_test/app_screenshots_test.dart) writes the
+# files; this manifest declares which of them the guides and the FAQ are
+# allowed to point at, and what they show.
+#
+# A guide that references an id missing here fails the render. An id declared
+# here whose image is missing fails too, unless it is marked `optional`.
+#
+# Captions double as image alt text on the published site and as the plain
+# text that replaces the image in the bundled in-app help — the in-app
+# Markdown renderer deliberately does not resolve images. Describe the
+# screen, do not repeat the file name.
+
+schemaVersion: 1
+
+shots:
+  - id: 01-intro
+    caption:
+      de: Die Einleitung beim ersten Start, Schritt „Deine Daten"
+      en: The first-start intro on the "Your data" step
+  - id: 02-settings
+    caption:
+      de: Die Einstellungen mit Sprache, Erscheinungsbild und den Bereichen darunter
+      en: The settings hub with language, appearance and the sections below
+  - id: 03-privacy
+    caption:
+      de: Datenschutz und Daten mit dem Gefahrenbereich
+      en: Privacy and data, showing the danger zone

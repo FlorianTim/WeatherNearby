@@ -1,0 +1,35 @@
+name: Android Build Release
+run-name: "Android release: ${{ inputs.ref || github.ref_name }}"
+
+# Manually build a signed release (AAB + APK + checksums) without
+# publishing. Version name/code are derived from the ref
+# (release/<maj.min>/<semver>, v<semver> or <semver> — see
+# scripts/release/resolve_android_version.sh).
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Ref to build (e.g. release/1.3/1.3.0-rc.1). Empty = current branch."
+        type: string
+        required: false
+        default: ""
+      flavor:
+        description: "prod = the release; prerelease = a candidate to test; snapshot = to try things out. The last two install next to the release."
+        type: choice
+        options:
+          - prod
+          - prerelease
+          - snapshot
+        default: prod
+
+permissions:
+  contents: read
+
+jobs:
+  release-build:
+    uses: ./.github/workflows/_android-release-build.yml
+    with:
+      ref: ${{ inputs.ref }}
+      flavor: ${{ inputs.flavor }}
+    secrets: inherit
