@@ -12,6 +12,8 @@
 //      VS Code workspace file (name from project.env WORKSPACE_FILE)
 //   6. Removes the services/api pub get from .devcontainer/devcontainer.json
 //   7. Removes backend tasks from .codex/config.toml
+//   8. Removes the npm (backend/) entry from .github/dependabot.yml, between
+//      its `# >>> backend` and `# <<< backend` markers (ADR-0018)
 //
 // With --with-packages it additionally removes the packages that only exist
 // to serve a backend: packages/api_client (HTTP scaffold) and
@@ -75,6 +77,7 @@ void main(List<String> args) {
 
   cleanWorkspaceFile();
   cleanDevcontainer();
+  removeMarkedBlock('.github/dependabot.yml', 'backend');
 
   removeLines(
     '.codex/config.toml',
@@ -136,6 +139,27 @@ void removeLines(String path, bool Function(String line) match) {
     return;
   }
   stdout.writeln('edit   $path (-${lines.length - kept.length} lines)');
+  if (!dryRun) file.writeAsStringSync('${kept.join('\n')}\n');
+}
+
+/// Removes the lines from `# >>> <name>` through `# <<< <name>`, markers
+/// included. A config entry for a directory that no longer exists fails on
+/// every Dependabot run, so the entry goes with the directory.
+void removeMarkedBlock(String path, String name) {
+  final file = File(path);
+  if (!file.existsSync()) {
+    stdout.writeln('skip   $path (not present)');
+    return;
+  }
+  final lines = file.readAsLinesSync();
+  final start = lines.indexWhere((l) => l.trim().startsWith('# >>> $name'));
+  final end = lines.indexWhere((l) => l.trim().startsWith('# <<< $name'));
+  if (start < 0 || end < start) {
+    stdout.writeln('ok     $path (no $name block)');
+    return;
+  }
+  final kept = [...lines.sublist(0, start), ...lines.sublist(end + 1)];
+  stdout.writeln('edit   $path (-${end - start + 1} lines, $name block)');
   if (!dryRun) file.writeAsStringSync('${kept.join('\n')}\n');
 }
 

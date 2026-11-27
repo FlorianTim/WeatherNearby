@@ -1,0 +1,45 @@
+name: Security scan
+run-name: "Security scan"
+
+# gitleaks over the full history and OSV-Scanner on pubspec.lock, on every
+# ready pull request and weekly. Fails on findings. The free replacement for
+# secret scanning and dependency review, which private repositories on GitHub
+# Free do not get (ADR-0018). dependency-audit.yml stays: it runs the same
+# OSV.dev check through tools/audit_deps.dart, the tool developers also run
+# locally (`scripts/deps/audit.sh`).
+#
+# Accepted exceptions are reviewed lines in the repository, not switches here:
+# `.gitleaks.toml` / `.gitleaksignore` for secrets, `osv-scanner.toml` next to
+# the lockfile for vulnerabilities.
+#
+# ci-gate.yml verifies that this workflow started (--expect-always: no path
+# filter on purpose).
+#
+# Shared logic in lumbrecode-engineering, pinned to @v1.
+
+# Actions minutes: pull_request workflows run only on ready pull requests
+# into main (drafts are skipped, "Ready for review" starts them) and cancel
+# superseded runs.
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+  schedule:
+    - cron: "0 4 * * 1" # Monday 04:00 UTC
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  scan:
+    if: ${{ !github.event.pull_request.draft }}
+    uses: FlorianTim/lumbrecode-engineering/.github/workflows/security-scan.yml@v1
+    permissions:
+      contents: read
+    with:
+      runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+      lockfiles: --lockfile=pubspec.lock

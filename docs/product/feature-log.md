@@ -25,6 +25,7 @@ Status is `shipped` unless the version is still in progress.
 
 | Type | Area | What | Reference |
 |---|---|---|---|
+| 🧱 | Dependencies | Dependabot is the active bot (pub workspace (`/`, `/apps/*`, `/packages/*`, `/services/*`), with a `git` registry for the private `flutter-libraries`; GitHub Actions; npm for `backend/`; weekly, 5-day cooldown); green minor/patch and security updates merge automatically, majors get `needs-human`; nightly triage issue incl. Flutter stable; gitleaks/OSV scan verified by the CI gate; no deploy | ADR-0018 |
 | 🧱 | CI | `ci-mobile.yml` is back on the moving `@v1` of the shared Flutter workflow; baseline 1.7.0 is the template's baseline | KI-012 |
 | ♻️ | App shell | The to-do list is the main screen; the greeting demo page and the unrouted starter page `features/home/` are removed. Settings and About open from the to-do app bar | ADR-0011 |
 | 🐛 | Android build | `buildFeatures { resValues = true }` is added by `apply_android_branding.sh`; AGP 9 rejected the generated `resValue` | — |

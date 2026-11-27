@@ -40,8 +40,16 @@ jobs:
       fail-fast: false
       matrix:
         # One entry per workflow that must not fail silently. Anything calling
-        # a reusable workflow from lumbrecode-engineering belongs here.
-        workflow: [ci-mobile.yml]
+        # a reusable workflow from lumbrecode-engineering on pull_request
+        # belongs here. `expect-always` marks a workflow without a path filter
+        # (it must run on every pull request). dependabot-automerge.yml and
+        # dependency-triage.yml are not pull_request workflows and cannot be
+        # verified from here.
+        include:
+          - workflow: ci-mobile.yml
+            expect-always: false
+          - workflow: security-scan.yml
+            expect-always: true
     name: "gate (${{ matrix.workflow }})"
     steps:
       - name: Checkout
@@ -57,4 +65,5 @@ jobs:
             --repo "${{ github.repository }}" \
             --pr "${{ github.event.pull_request.number }}" \
             --head-sha "${{ github.event.pull_request.head.sha }}" \
-            --workflow "${{ matrix.workflow }}"
+            --workflow "${{ matrix.workflow }}" \
+            ${{ matrix.expect-always && '--expect-always' || '' }}

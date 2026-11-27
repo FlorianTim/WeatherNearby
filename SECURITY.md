@@ -34,8 +34,11 @@ Never commit:
 - **Mobile:** follow the
   [OWASP MASVS](https://mas.owasp.org/MASVS/) baseline; store secrets in
   platform keychains, not in shared preferences or code.
-- **Dependencies:** Dependabot is enabled for GitHub Actions, pub, Docker and
-  npm. Do not add dependencies without justification.
+- **Dependencies:** Dependabot (`.github/dependabot.yml`) updates pub, GitHub Actions and the Node backend (npm); green
+  security and minor/patch updates are merged automatically, majors wait for a
+  person. `security-scan.yml` (gitleaks, OSV-Scanner) runs on every pull
+  request, `dependency-triage.yml` keeps open findings in one issue
+  (ADR-0018). Do not add dependencies without justification.
 
 ## Third-party licenses
 

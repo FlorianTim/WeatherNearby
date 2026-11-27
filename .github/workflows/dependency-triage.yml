@@ -1,0 +1,45 @@
+name: Dependency triage
+
+# Nightly: collects what Dependabot cannot settle on its own -- open alerts
+# without a patched version or older than seven days, OSV-Scanner findings in
+# pubspec.lock, pull requests labelled `needs-human`, and `flutter-version:`
+# pins behind the newest Flutter stable -- into one issue titled
+# "Dependency triage" (label `dependency-triage`). The issue is created,
+# updated, or closed when everything is clean; new findings arrive as a
+# comment, so watch the repository (Custom -> Issues) to get them (ADR-0018).
+#
+# A derived app that commits backend/package-lock.json adds
+# `--lockfile=backend/package-lock.json` to `lockfiles` here and in
+# security-scan.yml.
+#
+# Shared logic in lumbrecode-engineering, pinned to @v1.
+
+on:
+  schedule:
+    - cron: "30 3 * * *" # 03:30 UTC
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  triage:
+    uses: FlorianTim/lumbrecode-engineering/.github/workflows/dependency-triage.yml@v1
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: read
+      security-events: read
+    with:
+      runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+      ecosystem: pub
+      lockfiles: --lockfile=pubspec.lock
+      toolchain-check: flutter
+    # Optional: a fine-grained token with read-only "Dependabot alerts", for
+    # when the job's own token may not read them. Unset is fine; the issue
+    # then says the alerts could not be read.
+    secrets:
+      alerts-token: ${{ secrets.DEPENDABOT_ALERTS_TOKEN }}

@@ -1,0 +1,52 @@
+name: CodeQL
+run-name: "CodeQL"
+
+# Code scanning for the Node backend (backend/). This repository is public, so
+# CodeQL is free here (ADR-0018). CodeQL does not support Dart: the Flutter and
+# Dart code is covered by `melos run ci` (analyze) and by security-scan.yml
+# (gitleaks, OSV-Scanner), not by this workflow.
+#
+# Advanced setup. If "Default setup" for code scanning is switched on in the
+# repository settings, switch it off first; the two cannot run side by side.
+#
+# Results appear under Security -> Code scanning.
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - "backend/**"
+      - ".github/workflows/codeql.yml"
+  schedule:
+    - cron: "17 4 * * 2" # Tuesday 04:17 UTC
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  analyze:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: javascript-typescript
+          build-mode: none
+
+      - name: Analyze
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:javascript-typescript"

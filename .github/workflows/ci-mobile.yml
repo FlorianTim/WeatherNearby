@@ -15,6 +15,9 @@ on:
       - ".github/**"
       - "scripts/**"
       - "pubspec.yaml"
+      # The workspace's single lockfile. A Dependabot pub update can change
+      # nothing else, and this workflow is its gate (dependabot-automerge.yml).
+      - "pubspec.lock"
 
 permissions:
   contents: read
@@ -37,6 +40,9 @@ jobs:
     # Read access to the private flutter-libraries repository, which
     # `task_interchange` is resolved from (ADR-0017). Read-only Contents, that
     # repository only. docs/operations/local-library-development.md.
+    # Dependabot-triggered runs read Dependabot secrets only: the same token
+    # must also exist under Settings -> Secrets and variables -> Dependabot,
+    # or every Dependabot pull request is red here (ADR-0018).
     secrets:
       git-read-token: ${{ secrets.FLUTTER_LIBRARIES_TOKEN }}
     with:
@@ -45,8 +51,9 @@ jobs:
       # commit to build, so the SDK changes underneath the repository with no
       # pull request and no gate. Flutter 3.47.2 shipped a new analyzer
       # diagnostic as a patch release and turned CI red here on 2026-09-03, a
-      # week after 3.47.1 was green. Renovate raises this pin as a normal,
-      # reviewable pull request.
+      # week after 3.47.1 was green. dependency-triage.yml reports a newer
+      # stable; the pin is raised in its own reviewable pull request
+      # (ADR-0018).
       flutter-version: 3.47.1
       java-version: "17"
       bootstrap-command: dart pub global activate melos && melos bs
