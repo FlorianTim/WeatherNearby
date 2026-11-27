@@ -34,8 +34,9 @@ jobs:
           # no commit to build, so the SDK changes underneath the repository
           # with no pull request and no gate. Flutter 3.47.2 shipped a new
           # analyzer diagnostic as a patch release and turned CI red here on
-          # 2026-09-03, a week after 3.47.1 was green. Renovate raises this
-          # pin as a normal, reviewable pull request.
+          # 2026-09-03, a week after 3.47.1 was green. dependency-triage.yml
+          # reports a newer stable; the pin is raised in its own reviewable
+          # pull request (ADR-0018).
           flutter-version: 3.47.1
           # Note the input names differ from the previous action:
           # here `cache` is the SDK and `pub-cache` the dependencies.

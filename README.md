@@ -668,6 +668,11 @@ See ADR-0003 for details.
 | `ci-mobile.yml`           | Flutter analyze + test          | PR / push to main     |
 | `ci-gate.yml`             | Asserts the gates above actually ran | **Every** PR     |
 | `ci-backend.yml`          | Dart format + analyze + test    | PR / push to main     |
+| `security-scan.yml`       | gitleaks + OSV-Scanner          | **Every** PR / weekly |
+| `dependency-audit.yml`    | OSV.dev audit of `pubspec.lock` | PR on pubspec / weekly |
+| `dependabot-automerge.yml`| Merge green minor/patch + security Dependabot PRs (no deploy) | After Mobile CI / Backend CI (Node) |
+| `dependency-triage.yml`   | One "Dependency triage" issue   | Nightly / manual      |
+| `codeql.yml`              | CodeQL (Node backend)           | PR on backend / weekly |
 | `build-android.yml`       | Android release build (APK/AAB) | Manual / tag          |
 | `build-ios.yml`           | iOS build (unsigned)            | Manual / tag          |
 | `docs-build.yml`          | Architecture PDF                | Push to main / manual |

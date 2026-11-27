@@ -13,6 +13,32 @@ release cycles reviewable without losing Keep-a-Changelog compatibility.
 
 ## [Unreleased]
 
+### Dependency updates run unattended
+
+- **Dependabot is the active update bot again (ADR-0018).**
+  `.github/dependabot.yml` follows the lumbrecode-engineering `flutter`
+  profile: pub for the workspace (`/`, `/apps/*`, `/packages/*`, `/services/*`), with a `git` registry for the private `flutter-libraries`; GitHub Actions; and npm for `backend/`; weekly on Monday 05:00
+  Europe/Berlin, five-day cooldown, one `minor-and-patch` group, minor/patch
+  security updates grouped, majors one by one. The KI-001 package set moves
+  by patch only until the riverpod fix ships.
+- **Three callers of shared workflows (`@v1`, lumbrecode-engineering
+  v1.9.0).** `dependabot-automerge.yml` merges a green Dependabot-only pull
+  request that is a security update or minor/patch throughout, gated by
+  Mobile CI (pub, GitHub Actions) or Backend CI (Node) (npm), and labels everything else `needs-human`. It deploys nothing; the
+  store release stays manual. `dependency-triage.yml` keeps one "Dependency
+  triage" issue, including a Flutter stable newer than the pinned 3.47.1.
+  `security-scan.yml` runs gitleaks and OSV-Scanner on every ready pull
+  request and weekly, and `ci-gate.yml` verifies that it started.
+- `ci-mobile.yml` also runs when only `pubspec.lock` changes, which is all a
+  Dependabot pub update may touch.
+- The workflow comments no longer claim that Renovate raises the Flutter pin.
+  `.github/renovate.json5` stays as a dormant, baseline-delivered option;
+  `dependency-audit.yml` stays as the CI twin of `scripts/deps/audit.sh`.
+- `codeql.yml` (public repository): CodeQL for the Node backend, on
+  `backend/**` and weekly. CodeQL does not support Dart, so the Flutter code
+  is covered by `flutter analyze` and the security scan only.
+- Needs, per repository: Dependabot alerts and security updates switched on, and `FLUTTER_LIBRARIES_TOKEN` also as a **Dependabot** secret, and secret scanning (public repository).
+
 ### Packing lists from Packzeit (plan change, no import yet)
 
 - **Baseline 1.5.2 -> 1.6.0** adds the packing-list fixtures `52`-`54`, the

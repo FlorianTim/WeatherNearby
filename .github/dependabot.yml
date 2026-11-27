@@ -1,0 +1,171 @@
+# Dependabot: the active update bot (ADR-0018).
+#
+# Based on the lumbrecode-engineering `flutter` profile
+# (.lumbrecode/templates/dependabot/flutter/dependabot.yml), extended to the
+# manifests this repository actually has.
+#
+# Security updates are switched on in the repository settings
+# (Settings -> Advanced Security -> Dependabot security updates) and are not
+# delayed by `cooldown` or the schedule.
+#
+# Version updates: weekly, Monday 05:00 Europe/Berlin, releases at least five
+# days old, minor/patch grouped, majors one by one, at most five open pull
+# requests per ecosystem. dependabot-automerge.yml merges the minor/patch group
+# and security updates once the gating workflow is green, and deploys
+# nothing: a store release stays a human decision.
+#
+# The Flutter SDK itself is pinned in the workflows (`flutter-version:`);
+# Dependabot cannot see that pin. dependency-triage.yml reports a newer stable
+# in the "Dependency triage" issue, and the pin is raised in its own pull
+# request (lumbrecode-engineering skill `dependency-upgrade`).
+#
+# Deliberately not listed:
+#   - pip (requirements.txt, help renderer only): no pull request workflow
+#     exercises it, so an update could never be gated and would only queue.
+#     Security updates still arrive through the repository setting.
+#   - docker (services/api/Dockerfile, docker/, docker-compose.yml): every
+#     image is a floating tag (`stable`, `latest`), which Dependabot cannot update.
+#
+# .github/renovate.json5 stays dormant (the Renovate app is not installed).
+# Enabling Renovate means removing the version updates below in the same
+# change: one bot per repository.
+version: 2
+
+registries:
+  # apps/mobile_app depends on the private FlorianTim/flutter-libraries through
+  # a `git:` dependency (ADR-0017). Without credentials Dependabot cannot
+  # resolve the workspace and every pub update fails. The secret is a
+  # *Dependabot* secret (Settings -> Secrets and variables -> Dependabot), not
+  # the Actions secret of the same name: Dependabot reads only its own. Same
+  # value: fine-grained, read-only Contents on flutter-libraries.
+  flutter-libraries:
+    type: git
+    url: https://github.com
+    username: x-access-token
+    password: ${{secrets.FLUTTER_LIBRARIES_TOKEN}}
+
+updates:
+  # One pub workspace (root pubspec.yaml, `workspace:`), one pubspec.lock at the
+  # root. The members are listed so that Dependabot sees their constraints;
+  # every resulting pull request changes the root pubspec.lock, which is what
+  # makes Mobile CI run on it.
+  - package-ecosystem: pub
+    directories:
+      - /
+      - /apps/*
+      - /packages/*
+      - /services/*
+    registries:
+      - flutter-libraries
+    schedule:
+      interval: weekly
+      day: monday
+      time: "05:00"
+      timezone: Europe/Berlin
+    cooldown:
+      default-days: 5
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        applies-to: version-updates
+        update-types: [minor, patch]
+      security:
+        applies-to: security-updates
+        update-types: [minor, patch]
+    ignore:
+      # KI-001: drift >= 2.32 needs a newer analyzer, which forces a riverpod
+      # runtime (3.3.x) that breaks the widget tests. A minor step of any of
+      # these would turn the whole minor-and-patch group red every week and
+      # hold every other pub update with it. Retry condition and recipe are in
+      # docs/known-issues.md; remove this block in the pull request that
+      # performs that upgrade. Patches still flow.
+      - dependency-name: drift
+        update-types: ["version-update:semver-minor"]
+      - dependency-name: drift_dev
+        update-types: ["version-update:semver-minor"]
+      - dependency-name: drift_flutter
+        update-types: ["version-update:semver-minor"]
+      - dependency-name: flutter_riverpod
+        update-types: ["version-update:semver-minor"]
+      - dependency-name: riverpod_annotation
+        update-types: ["version-update:semver-minor"]
+      - dependency-name: riverpod_generator
+        update-types: ["version-update:semver-minor"]
+      - dependency-name: riverpod_lint
+        update-types: ["version-update:semver-minor", "version-update:semver-patch"]
+      - dependency-name: custom_lint
+        update-types: ["version-update:semver-minor"]
+    labels:
+      - dependencies
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "05:00"
+      timezone: Europe/Berlin
+    cooldown:
+      default-days: 5
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        applies-to: version-updates
+        update-types: [minor, patch]
+      security:
+        applies-to: security-updates
+        update-types: [minor, patch]
+    labels:
+      - dependencies
+      - github-actions
+
+  # >>> backend (tools/remove_backend.dart deletes this block)
+  # Optional Node backend. Gated by "Backend CI (Node)", not Mobile CI; see
+  # dependabot-automerge.yml for how each pull request finds its gate.
+  # backend/ commits no package-lock.json, so Dependabot updates the ranges
+  # in package.json; commit a lockfile to get exact, reviewable bumps.
+  - package-ecosystem: npm
+    directory: /backend
+    schedule:
+      interval: weekly
+      day: monday
+      time: "05:00"
+      timezone: Europe/Berlin
+    cooldown:
+      default-days: 5
+    open-pull-requests-limit: 5
+    groups:
+      minor-and-patch:
+        applies-to: version-updates
+        update-types: [minor, patch]
+      security:
+        applies-to: security-updates
+        update-types: [minor, patch]
+    labels:
+      - dependencies
+  # <<< backend
+
+  # Gradle: no Android project is committed (apps/mobile_app has no android/),
+  # and an entry whose directory does not exist fails on every run. Uncomment
+  # when `android/` is committed.
+  #
+  # - package-ecosystem: gradle
+  #   directories:
+  #     - /apps/*/android
+  #   schedule:
+  #     interval: weekly
+  #     day: monday
+  #     time: "05:00"
+  #     timezone: Europe/Berlin
+  #   cooldown:
+  #     default-days: 5
+  #   open-pull-requests-limit: 5
+  #   groups:
+  #     minor-and-patch:
+  #       applies-to: version-updates
+  #       update-types: [minor, patch]
+  #     security:
+  #       applies-to: security-updates
+  #       update-types: [minor, patch]
+  #   labels:
+  #     - dependencies

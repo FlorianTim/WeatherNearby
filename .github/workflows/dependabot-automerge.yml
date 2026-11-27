@@ -1,0 +1,71 @@
+name: Dependabot auto-merge
+
+# Merges a Dependabot pull request once its gating workflow finished green on
+# exactly that commit (ADR-0018). Eligible: author and every commit
+# dependabot[bot], and a security update or every dependency minor/patch.
+# Anything else -- a major, a foreign commit, a red run -- gets the label
+# `needs-human` and one comment instead.
+#
+# It deploys nothing: a Flutter app ships through a store release, and cutting
+# one stays a human decision. There is no `deploy-workflow` below, and none
+# should be added.
+#
+# One gate per pull request. The shared workflow merges on the first green
+# run it is woken by, so a pull request must never be gated by two workflows:
+#   - Mobile CI          gates pub and GitHub Actions updates. It runs
+#                        `melos run ci` (format, analyze, every workspace
+#                        package's tests, services/api included) and is the
+#                        workflow that ci-gate.yml verifies.
+#   - Backend CI (Node)  gates npm updates of backend/ only; Mobile CI does not
+#                        run on them (path filter).
+# The `if:` below routes by Dependabot's branch name. Without it, a GitHub
+# Actions update that also touches ci-backend-node.yml would be merged by the
+# fast Node run before Mobile CI had finished.
+#
+# Dependabot-triggered runs get Dependabot secrets only. Mobile CI needs
+# FLUTTER_LIBRARIES_TOKEN to resolve flutter-libraries, so the same token must
+# also exist as a Dependabot secret, or every Dependabot run is red.
+#
+# If a workflow named here is renamed, rename it here as well: a name that
+# matches nothing never triggers, and nothing reports it.
+#
+# The logic lives in lumbrecode-engineering; this file only chooses inputs.
+# Pinned to the moving major tag (@v1), never @main.
+
+on:
+  workflow_run:
+    workflows: ["Mobile CI", "Backend CI (Node)"]
+    types: [completed]
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: false
+
+jobs:
+  automerge:
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.actor.login == 'dependabot[bot]' &&
+      (
+        (github.event.workflow_run.name == 'Mobile CI' &&
+         !startsWith(github.event.workflow_run.head_branch, 'dependabot/npm_and_yarn/')) ||
+        (github.event.workflow_run.name == 'Backend CI (Node)' &&
+         startsWith(github.event.workflow_run.head_branch, 'dependabot/npm_and_yarn/'))
+      )
+    uses: FlorianTim/lumbrecode-engineering/.github/workflows/dependabot-automerge.yml@v1
+    # Exactly what the shared job asks for (plus issues: write for the label
+    # and comment, as in web-app-template). A caller that grants less fails
+    # before any job starts.
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+      issues: write
+    with:
+      runs-on: ${{ vars.RUNNER_LINUX || 'ubuntu-latest' }}
+      scope: security-and-minor-patch
+      allow-major: false
+      merge-method: squash
+      notify-skipped: true
